@@ -27,10 +27,10 @@
         html { scroll-behavior: smooth; }
         body { font-family: 'Outfit', sans-serif; background: var(--dark-bg); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
 
-        /* 1. FLOATING PILL NAVBAR (Kunci Ukuran Video Biar Gak Rusak) */
+        /* 1. FLOATING NAVBAR FIX & DROPDOWN SUPPORT */
         .nav-wrapper {
             position: fixed;
-            top: 1.5rem;
+            top: 1.2rem;
             left: 0; right: 0;
             display: flex;
             justify-content: center;
@@ -39,19 +39,19 @@
         }
 
         .pill-navbar {
-            background: rgba(25, 25, 35, 0.9);
+            background: rgba(25, 25, 35, 0.95);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 50px;
-            padding: 0.4rem 0.6rem 0.4rem 1.2rem;
+            border-radius: 40px;
+            padding: 0.4rem 0.8rem 0.4rem 0.8rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
             width: 100%;
-            max-width: 900px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            height: 56px;
+            max-width: 920px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            position: relative;
         }
 
         .pill-logo {
@@ -63,23 +63,22 @@
             letter-spacing: 1px;
             color: #fff;
             text-decoration: none;
-            height: 100%;
         }
 
-        /* PEMBATAS KETAT UNTUK LOGO VIDEO LOOP */
+        /* FRAME LOGO KOTAK (BIAR LOGO KELIATAN JELAS) */
         .pill-logo-video {
-            width: 38px !important;
-            height: 38px !important;
-            min-width: 38px !important;
-            min-height: 38px !important;
-            border-radius: 50% !important;
+            width: 44px !important;
+            height: 44px !important;
+            min-width: 44px !important;
+            min-height: 44px !important;
+            border-radius: 10px !important; /* Dibuat Kotak Rounded */
             overflow: hidden !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
-            border: 1.5px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
-            background: #000;
+            border: 1.5px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 0 12px rgba(0, 240, 255, 0.25);
+            background: #121218;
             flex-shrink: 0;
         }
 
@@ -87,23 +86,99 @@
         .pill-logo-video img {
             width: 100% !important;
             height: 100% !important;
-            max-width: 100% !important;
-            max-height: 100% !important;
-            object-fit: cover !important;
+            object-fit: contain !important; /* Gambar/video masuk penuh tanpa terpotong */
             display: block !important;
+            padding: 2px;
         }
 
-        .pill-links { display: flex; gap: 1.5rem; list-style: none; }
-        .pill-links a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color 0.2s ease; }
+        .pill-nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
+
+        .pill-links { 
+            display: flex; 
+            gap: 1.5rem; 
+            list-style: none; 
+            align-items: center;
+        }
+
+        .pill-links a { 
+            color: var(--text-muted); 
+            text-decoration: none; 
+            font-size: 0.85rem; 
+            font-weight: 500; 
+            transition: color 0.2s ease; 
+        }
+
         .pill-links a:hover { color: var(--text-main); }
-        .pill-btn { background: #ffffff; color: #0d0d12; padding: 0.5rem 1.4rem; border-radius: 40px; font-weight: 700; font-size: 0.85rem; text-decoration: none; transition: transform 0.2s ease, background 0.2s ease; }
+
+        .pill-btn { 
+            background: #ffffff; 
+            color: #0d0d12; 
+            padding: 0.5rem 1.4rem; 
+            border-radius: 30px; 
+            font-weight: 700; 
+            font-size: 0.85rem; 
+            text-decoration: none; 
+            transition: transform 0.2s ease, background 0.2s ease;
+            white-space: nowrap;
+        }
+
         .pill-btn:hover { transform: scale(1.05); background: var(--cyan); }
+
+        /* TOMBOL HAMBURGER (DROP LIST MENU) */
+        .menu-toggle {
+            display: none;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            padding: 0.5rem 0.8rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+
+        /* DROPDOWN MENU UNTUK TAMPILAN TERZOOM / MOBILE */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: calc(100% + 0.8rem);
+            left: 0; right: 0;
+            background: rgba(18, 18, 26, 0.98);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 16px;
+            padding: 1rem;
+            flex-direction: column;
+            gap: 0.8rem;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+            z-index: 999;
+        }
+
+        .dropdown-menu.active {
+            display: flex;
+        }
+
+        .dropdown-menu a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.95rem;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            transition: background 0.2s ease;
+        }
+
+        .dropdown-menu a:hover {
+            background: rgba(255, 255, 255, 0.06);
+        }
 
         /* 2. HERO SECTION TOP STYLE */
         .hero-top-style {
             position: relative;
             min-height: 90vh;
-            padding-top: 7rem;
+            padding-top: 7.5rem;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -120,14 +195,14 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 500px;
+            min-height: 480px;
             padding: 0 1rem;
         }
 
         .giant-bg-text {
             position: absolute;
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(5rem, 16vw, 15rem);
+            font-size: clamp(4.5rem, 15vw, 15rem);
             line-height: 0.85;
             letter-spacing: 4px;
             font-weight: 900;
@@ -159,7 +234,7 @@
 
         .hero-meta-left {
             position: absolute;
-            top: 20%;
+            top: 15%;
             left: 5%;
             z-index: 3;
             max-width: 220px;
@@ -201,7 +276,7 @@
             margin-top: 0.3rem;
         }
 
-        /* 3. MARQUEE BANNER */
+        /* MARQUEE BANNER */
         .marquee-bar {
             width: 100%;
             background: linear-gradient(90deg, #7c3aed, #ff2d6a);
@@ -234,7 +309,7 @@
             100% { transform: translateX(-50%); }
         }
 
-        /* PORTFOLIO & OTHER SECTIONS */
+        /* SECTIONS GENERAL */
         section { padding: 6rem 5%; }
         .section-header { text-align: center; margin-bottom: 3.5rem; }
         .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 4vw, 3.8rem); letter-spacing: 2px; }
@@ -270,8 +345,12 @@
 
         footer { padding: 3rem 5%; border-top: 1px solid var(--card-border); text-align: center; color: var(--text-muted); font-size: 0.85rem; }
 
-        @media (max-width: 768px) {
-            .pill-links { display: none; }
+        /* RESPONSIVE BREAKPOINT (SAAT ZOOM / TAMPILAN HP) */
+        @media (max-width: 860px) {
+            .pill-links { display: none; } /* Sembunyikan link biasa saat ter-zoom */
+            .menu-toggle { display: block; } /* Tampilkan tombol drop list */
+
+            .hero-top-container { flex-direction: column; justify-content: center; min-height: 400px; }
             .hero-meta-left, .hero-meta-right { position: relative; top: auto; bottom: auto; left: auto; right: auto; text-align: center; margin: 1rem 0; }
             .bento-gallery, .skills-grid { grid-template-columns: 1fr; }
             .gallery-item-wide { grid-column: span 1; }
@@ -280,26 +359,41 @@
 </head>
 <body>
 
-    <!-- FLOATING PILL NAVBAR -->
+    <!-- NAVBAR DENGAN LOGO KOTAK & DROP LIST RESPONSIVE -->
     <div class="nav-wrapper">
         <nav class="pill-navbar">
             <a href="#" class="pill-logo">
                 <div class="pill-logo-video">
                     <video autoplay loop muted playsinline>
                         <source src="images/logo-loop.mp4" type="video/mp4">
-                        <!-- Fallback jika video gagal load -->
-                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Logo">
+                        <img src="images/profile.jpg" alt="Logo">
                     </video>
                 </div>
                 KYO STUDIO
             </a>
-            <ul class="pill-links">
-                <li><a href="#about">Profil</a></li>
-                <li><a href="#works">Karya</a></li>
-                <li><a href="#skills">Keahlian</a></li>
-                <li><a href="#contact">Layanan</a></li>
-            </ul>
-            <a href="#contact" class="pill-btn">Kontak</a>
+
+            <div class="pill-nav-right">
+                <!-- Links Desktop -->
+                <ul class="pill-links">
+                    <li><a href="#about">Profil</a></li>
+                    <li><a href="#works">Karya</a></li>
+                    <li><a href="#skills">Keahlian</a></li>
+                    <li><a href="#contact">Layanan</a></li>
+                </ul>
+
+                <a href="#contact" class="pill-btn">Kontak</a>
+
+                <!-- Tombol Drop List (Muncul saat Zoom/Mobile) -->
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">☰</button>
+            </div>
+
+            <!-- Dropdown List Menu saat Zoom -->
+            <div class="dropdown-menu" id="dropdownMenu">
+                <a href="#about" onclick="closeDropdown()">Profil</a>
+                <a href="#works" onclick="closeDropdown()">Karya</a>
+                <a href="#skills" onclick="closeDropdown()">Keahlian</a>
+                <a href="#contact" onclick="closeDropdown()">Layanan</a>
+            </div>
         </nav>
     </div>
 
@@ -314,7 +408,6 @@
             <div class="giant-bg-text">PORTFOLIO</div>
 
             <div class="cutout-image-wrapper">
-                <!-- Gunakan gambar Unsplash berkualitas tinggi sebagai fallback jika profile-cutout.png belum di-upload -->
                 <img src="images/profile-cutout.png" alt="Kyo Profile" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80'">
             </div>
 
@@ -423,5 +516,18 @@
         <p>© 2026 KYO Studio. All rights reserved.</p>
     </footer>
 
+    <!-- SCRIPT DROPDOWN TOGGLE -->
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+
+        menuToggle.addEventListener('click', () => {
+            dropdownMenu.classList.toggle('active');
+        });
+
+        function closeDropdown() {
+            dropdownMenu.classList.remove('active');
+        }
+    </script>
 </body>
 </html>
