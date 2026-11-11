@@ -23,25 +23,11 @@
             --container-max: 1100px;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Outfit', sans-serif; background: var(--dark-bg); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Outfit', sans-serif;
-            background: var(--dark-bg);
-            color: var(--text-main);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-       /* 1. FLOATING PILL NAVBAR (Kunci Ukuran Video Biar Gak Rusak) */
+        /* 1. FLOATING PILL NAVBAR (Kunci Ukuran Video Biar Gak Rusak) */
         .nav-wrapper {
             position: fixed;
             top: 1.5rem;
@@ -317,34 +303,28 @@
         </nav>
     </div>
 
-    <!-- 2. HERO SECTION TOP STYLE (Sesuai Referensi Gambar) -->
+    <!-- HERO TOP SECTION -->
     <section class="hero-top-style" id="about">
         <div class="hero-top-container">
-            
-            <!-- Teks Kiri Atas -->
             <div class="hero-meta-left">
                 <span>Cinematographer & Dev</span>
                 <h3>Visual Storyteller & Modern Web Creator</h3>
             </div>
 
-            <!-- Teks Raksasa di Belakang -->
             <div class="giant-bg-text">PORTFOLIO</div>
 
-            <!-- Foto Diri Cutout di Tengah -->
-            <!-- Tips: Masukkan foto kamu tanpa background (PNG transparan) ke images/profile-cutout.png -->
             <div class="cutout-image-wrapper">
-                <img src="images/profile-cutout.png" alt="Kyo Profile" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80'">
+                <!-- Gunakan gambar Unsplash berkualitas tinggi sebagai fallback jika profile-cutout.png belum di-upload -->
+                <img src="images/profile-cutout.png" alt="Kyo Profile" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80'">
             </div>
 
-            <!-- Teks Kanan Bawah -->
             <div class="hero-meta-right">
                 <p>Pengoperasian Kamera, Lighting & Web Interactive</p>
                 <strong>Based in Jember, ID</strong>
             </div>
-
         </div>
 
-        <!-- 3. MARQUEE BANNER STRIP -->
+        <!-- MARQUEE BANNER -->
         <div class="marquee-bar">
             <div class="marquee-content">
                 <div class="marquee-item"><span>CINEMATOGRAPHY</span> <span class="star">✦</span></div>
@@ -353,7 +333,7 @@
                 <div class="marquee-item"><span>VIDEO EDITING</span> <span class="star">✦</span></div>
                 <div class="marquee-item"><span>FUJIFILM X-T2</span> <span class="star">✦</span></div>
                 <div class="marquee-item"><span>TAILWIND CSS</span> <span class="star">✦</span></div>
-                <!-- Duplicate untuk continuous loop -->
+                <!-- Loop Duplicate -->
                 <div class="marquee-item"><span>CINEMATOGRAPHY</span> <span class="star">✦</span></div>
                 <div class="marquee-item"><span>LIGHTING SETUP</span> <span class="star">✦</span></div>
                 <div class="marquee-item"><span>FRONTEND WEB DEV</span> <span class="star">✦</span></div>
@@ -362,7 +342,7 @@
         </div>
     </section>
 
-    <!-- SECTION PORTFOLIO WORKS -->
+    <!-- WORKS SECTION -->
     <section id="works">
         <div class="section-header">
             <h2 class="section-title">SELECTED <span>WORKS</span></h2>
@@ -404,7 +384,7 @@
         </div>
     </section>
 
-    <!-- KEAHLIAN SECTION -->
+    <!-- SKILLS SECTION -->
     <section id="skills">
         <div class="section-header">
             <h2 class="section-title">CORE <span>CAPABILITIES</span></h2>
