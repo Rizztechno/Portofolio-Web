@@ -77,6 +77,24 @@
             text-decoration: none;
         }
 
+        .pill-logo-video {
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          overflow: hidden;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          box-shadow: 0 0 10px rgba(0, 240, 255, 0.3); /* Efek glow halus */
+        }
+
+        .pill-logo-video video,
+        .pill-logo-video img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover; /* Agar video terpotong rapi memenuhi lingkaran */
+       }
         .pill-logo-badge {
             width: 32px;
             height: 32px;
