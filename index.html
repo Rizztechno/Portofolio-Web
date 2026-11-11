@@ -23,6 +23,7 @@
                 <span>Cinematography & Web Dev</span>
             </div>
             <ul class="nav-links">
+                <li><a href="#about">About Me</a></li>
                 <li><a href="#gallery">Portfolio</a></li>
                 <li><a href="#features">Skills</a></li>
                 <li><a href="#pricing">Services</a></li>
@@ -36,6 +37,7 @@
             </button>
         </div>
         <div class="mobile-menu" id="mobileMenu">
+            <a href="#about">About Me</a>
             <a href="#gallery">Portfolio</a>
             <a href="#features">Skills</a>
             <a href="#pricing">Services</a>
@@ -54,7 +56,7 @@
                     <span class="line-2">& DIGITAL CODE</span>
                     <span class="line-3">with passion & precision</span>
                 </h1>
-                <p class="hero-desc">Spesialis Kamera, Lighting, Post-Production Video Editing, serta Web Development modern dengan tampilan clean & responsif.</p>
+                <p class="hero-desc">Kombinasi antara sinematografi, pencahayaan presisi, post-production video, dan pengembangan web modern.</p>
                 
                 <div class="hero-stats">
                     <div class="stat">
@@ -86,7 +88,7 @@
 
                     <div class="prompt-area">
                         <div class="prompt-label">Project Brief / Concept</div>
-                        <textarea class="prompt-input" rows="3" placeholder="Contoh: Video Teaser Event POSSMA, Sinematik Video Klip, atau Landing Page Interaktif Qiza Store..."></textarea>
+                        <textarea class="prompt-input" rows="3" placeholder="Tuliskan ide visual atau konsep web kamu di sini..."></textarea>
                     </div>
 
                     <div class="demo-controls">
@@ -123,16 +125,62 @@
                             </svg>
                             <p>Sampel preview proyek akan muncul di sini</p>
                         </div>
-                        <img class="generated-image" id="generatedImage" src="" alt="Sample Showcase Work">
+                        <img class="generated-image" id="generatedImage" src="images/hero-showcase.jpg" alt="Sample Showcase Work">
                         <div class="image-actions" id="imageActions">
-                            <button class="action-btn">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-                                Detail Project
-                            </button>
-                            <button class="action-btn" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                                Order Similar
-                            </button>
+                            <button class="action-btn">Detail Project</button>
+                            <button class="action-btn" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">Order Similar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION PROFIL BARU (ABOUT ME) -->
+    <section class="features-section" id="about" style="border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 5rem;">
+        <div class="features-inner">
+            <div class="section-header" style="margin-bottom: 3rem;">
+                <h2 class="section-title">ABOUT <span>THE CREATOR</span></h2>
+                <p class="section-subtitle">Mengenal lebih dekat sosok di balik kamera dan baris kode.</p>
+            </div>
+
+            <div class="cta-box" style="grid-template-columns: 1fr 1.2fr; gap: 3rem;">
+                <!-- Foto Profil Custom -->
+                <div style="position: relative;">
+                    <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 0.8rem; overflow: hidden;">
+                        <img src="images/profile.jpg" alt="Foto Profil Kyo" style="width: 100%; height: auto; border-radius: 8px; display: block; object-fit: cover;">
+                    </div>
+                </div>
+
+                <!-- Info Bio Data & Highlight -->
+                <div class="cta-content">
+                    <div class="cta-eyebrow">CINEMATOGRAPHER & FRONTEND DEV</div>
+                    <h2 class="cta-title" style="font-size: 2.8rem; margin-bottom: 1rem;">
+                        [NAMA_LENGKAP_ANDA]
+                        <span style="font-size: 0.45em; color: var(--text-muted); display: block; margin-top: 0.3rem;">Based in Jember, East Java, Indonesia</span>
+                    </h2>
+
+                    <p class="cta-desc" style="max-width: 100%; font-size: 1.05rem; line-height: 1.8;">
+                        [TULIS_DESKRIPSI_DIRI_DISINI: Contoh — Saya fokus berkarya di dunia cinematografi, pengoperasian kamera, komposisi tata cahaya, dan video editing post-production. Selain dunia visual, saya juga aktif membangun landing page web yang responsif dan interaktif.]
+                    </p>
+
+                    <!-- Core Stack / Tools Grid -->
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1.5rem;">
+                        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 1rem; border-radius: 6px;">
+                            <span style="font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--text-muted); display: block; text-transform: uppercase;">Camera & Gear</span>
+                            <strong style="color: var(--text-main); font-size: 0.95rem;">[MAIN_CAMERA: misal Fujifilm X-T2]</strong>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 1rem; border-radius: 6px;">
+                            <span style="font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--text-muted); display: block; text-transform: uppercase;">Web Tech Stack</span>
+                            <strong style="color: var(--text-main); font-size: 0.95rem;">[TECH_STACK: misal HTML, Tailwind, JS]</strong>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 1rem; border-radius: 6px;">
+                            <span style="font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--text-muted); display: block; text-transform: uppercase;">Audio Production</span>
+                            <strong style="color: var(--text-main); font-size: 0.95rem;">[AUDIO_SOFTWARE: misal FL Studio]</strong>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 1rem; border-radius: 6px;">
+                            <span style="font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--text-muted); display: block; text-transform: uppercase;">Design & Editing</span>
+                            <strong style="color: var(--text-main); font-size: 0.95rem;">[EDITING_SOFTWARE: misal Premiere, Photoshop]</strong>
                         </div>
                     </div>
                 </div>
@@ -158,35 +206,35 @@
 
             <div class="bento-gallery">
                 <div class="gallery-item" data-category="landscape">
-                    <img src="https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&w=1200&q=80" alt="Cinematic Teaser">
+                    <img src="images/project-teaser.jpg" alt="Cinematic Teaser">
                     <div class="item-info">
                         <p class="item-prompt">Teaser Commercial POSSMA — High Dynamic Range Lighting & Color Grading</p>
                         <span class="item-style">Video & Editing</span>
                     </div>
                 </div>
                 <div class="gallery-item" data-category="portrait">
-                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80" alt="Web App UI">
+                    <img src="images/project-web.jpg" alt="Web App UI">
                     <div class="item-info">
                         <p class="item-prompt">ARTHEVALITY Batch Web — Tailwind CSS & Interactive Layout</p>
                         <span class="item-style">Web Development</span>
                     </div>
                 </div>
                 <div class="gallery-item" data-category="abstract">
-                    <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80" alt="Fujifilm Shoot">
+                    <img src="images/project-photo.jpg" alt="Fujifilm Shoot">
                     <div class="item-info">
                         <p class="item-prompt">Mood Photography Session — Captured with Fujifilm X-T2</p>
                         <span class="item-style">Photography</span>
                     </div>
                 </div>
                 <div class="gallery-item" data-category="portrait">
-                    <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80" alt="Qiza Store Landing Page">
+                    <img src="images/project-qiza.jpg" alt="Qiza Store Landing Page">
                     <div class="item-info">
                         <p class="item-prompt">Qiza Store Storefront — Mobile First & WhatsApp Automation Integration</p>
                         <span class="item-style">Frontend Dev</span>
                     </div>
                 </div>
                 <div class="gallery-item" data-category="landscape">
-                    <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1200&q=80" alt="Event Documentation">
+                    <img src="images/project-pdd.jpg" alt="Event Documentation">
                     <div class="item-info">
                         <p class="item-prompt">Documentation Campaign — High Energy Stage & Crowd Capture</p>
                         <span class="item-style">PDD & Camera Operator</span>
@@ -252,33 +300,6 @@
                     </div>
                     <h3 class="feature-title">BRAND & GRAPHIC DESIGN</h3>
                     <p class="feature-desc">Desain poster campaign, banner event PDD, hingga branding toko digital dengan palet warna slate gray & frosted glass UI.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How It Works -->
-    <section class="how-section">
-        <div class="how-inner">
-            <div class="features-header">
-                <h2 class="section-title">WORKFLOW <span>PROCESS</span></h2>
-            </div>
-
-            <div class="how-grid">
-                <div class="how-step">
-                    <div class="step-number">01</div>
-                    <h3 class="step-title">BRAINSTORM & CONCEPT</h3>
-                    <p class="step-desc">Diskusi konsep visual, moodboard, referensi shooting, atau wireframe struktur web yang ingin dibuat.</p>
-                </div>
-                <div class="how-step">
-                    <div class="step-number">02</div>
-                    <h3 class="step-title">PRODUCTION & CODING</h3>
-                    <p class="step-desc">Proses pengambil gambar di lapangan (camera & lighting) atau penulisan kode frontend yang efisien.</p>
-                </div>
-                <div class="how-step">
-                    <div class="step-number">03</div>
-                    <h3 class="step-title">POST-PROCESS & DELIVERY</h3>
-                    <p class="step-desc">Finishing color grading, audio mixing, atau deployment web hingga siap rilis dan tayang.</p>
                 </div>
             </div>
         </div>
@@ -401,7 +422,7 @@
                 </h2>
                 <p class="cta-desc">Punya ide proyek video sinematik atau butuh pembuatan web interaktif? Mari berdiskusi.</p>
                 <div class="cta-buttons">
-                    <button class="cta-btn-primary" onclick="window.open('https://wa.me/', '_blank')">Chat via WhatsApp</button>
+                    <button class="cta-btn-primary" onclick="window.open('https://wa.me/[NOMOR_WHATSAPP_ANDA]', '_blank')">Chat via WhatsApp</button>
                     <button class="cta-btn-secondary" onclick="document.getElementById('gallery').scrollIntoView({behavior: 'smooth'})">View Portfolio</button>
                 </div>
             </div>
@@ -410,7 +431,7 @@
                     <div class="cta-demo-prompt">Visual mood: Moody Dark Slate Gray, Glassmorphic UI elements, Cinematic lighting, crisp detail</div>
                     <div class="cta-demo-arrow">↓</div>
                     <div class="cta-demo-result">
-                        <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80" alt="Cinematic Output">
+                        <img src="images/hero-showcase.jpg" alt="Cinematic Output">
                     </div>
                     <div class="cta-demo-meta">
                         <div class="cta-demo-time">Status: <span>Available for Hire</span></div>
@@ -449,6 +470,7 @@
             <div class="footer-bottom">
                 <p class="copyright">© 2026 KYO Studio. All rights reserved. Base template adapted from <a href="https://templatemo.com" target="_blank" rel="nofollow">TemplateMo PixelForge</a></p>
                 <div class="footer-legal">
+                    <a href="#about">About Me</a>
                     <a href="#gallery">Portfolio</a>
                     <a href="#features">Skills</a>
                     <a href="#contact">Contact</a>
