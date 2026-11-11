@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KYO — Cinematographer & Web Developer</title>
+    <title>KYO — Portfolio & Creative Studio</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-    <!-- CSS Internal (All-in-One Style) -->
     <style>
         :root {
             --cyan: #00f0ff;
             --magenta: #ff2d6a;
-            --purple: #a855f7;
-            --dark-bg: #0a0a0f;
+            --purple: #7c3aed;
+            --dark-bg: #0d0d12;
             --card-bg: rgba(255, 255, 255, 0.03);
             --card-border: rgba(255, 255, 255, 0.08);
             --text-main: #e8e8ed;
@@ -42,409 +41,343 @@
             overflow-x: hidden;
         }
 
-        /* Ambient background glow */
-        .ambient-glow {
+        /* 1. FLOATING PILL NAVBAR (Gaya Kapsul Melayang) */
+        .nav-wrapper {
             position: fixed;
-            width: 600px;
-            height: 600px;
-            border-radius: 50%;
-            filter: blur(150px);
-            opacity: 0.15;
-            pointer-events: none;
-            z-index: -1;
-        }
-        .glow-1 { top: -200px; right: -100px; background: var(--cyan); }
-        .glow-2 { bottom: 20%; left: -200px; background: var(--magenta); }
-        .glow-3 { bottom: -200px; right: 20%; background: var(--purple); }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            padding: 1.2rem 5%;
+            top: 1.5rem;
+            left: 0; right: 0;
             display: flex;
             justify-content: center;
-            align-items: center;
             z-index: 100;
-            backdrop-filter: blur(20px);
-            background: rgba(10, 10, 15, 0.7);
-            border-bottom: 1px solid var(--card-border);
-        }
-        .nav-inner {
-            max-width: var(--container-max);
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .logo {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.8rem;
-            letter-spacing: 2px;
-            background: linear-gradient(135deg, #fbbf24, #f472b6, #a78bfa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .logo span {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.65rem;
-            display: block;
-            letter-spacing: 1px;
-            -webkit-text-fill-color: var(--text-muted);
-            margin-top: -6px;
-        }
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: all 0.2s ease;
-        }
-        .nav-links a:hover {
-            color: var(--text-main);
-        }
-        .nav-cta {
-            padding: 0.6rem 1.4rem;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #fff;
-            font-family: 'Space Mono', monospace;
-            font-size: 0.8rem;
-            font-weight: 700;
-            cursor: pointer;
-            border-radius: 6px;
-            transition: all 0.25s ease;
-        }
-        .nav-cta:hover {
-            background: rgba(255, 255, 255, 0.15);
-            border-color: rgba(255, 255, 255, 0.3);
+            padding: 0 1rem;
         }
 
-        /* Hero Section */
-        .hero {
-            min-height: 90vh;
-            padding: 8rem 5% 4rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .hero-inner {
-            max-width: var(--container-max);
-            width: 100%;
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-        .hero-badge {
-            display: inline-block;
-            padding: 0.4rem 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .pill-navbar {
+            background: rgba(25, 25, 35, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 50px;
-            font-size: 0.75rem;
-            font-family: 'Space Mono', monospace;
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-        }
-        .hero h1 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(3.2rem, 6vw, 5.5rem);
-            line-height: 0.95;
-            letter-spacing: 2px;
-            margin-bottom: 1.5rem;
-        }
-        .hero h1 .line-gradient {
-            background: linear-gradient(90deg, #fbbf24, #f472b6, #a78bfa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .hero-desc {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            max-width: 480px;
-            margin-bottom: 2rem;
-            font-weight: 300;
-        }
-        .hero-stats {
+            padding: 0.5rem 0.6rem 0.5rem 1.5rem;
             display: flex;
-            gap: 2.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--card-border);
-        }
-        .stat-value {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 2.2rem;
-            color: var(--text-main);
-            line-height: 1;
-        }
-        .stat-label {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            font-family: 'Space Mono', monospace;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 900px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        /* Profile Showcase Box */
-        .profile-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 1.5rem;
-            backdrop-filter: blur(20px);
-            position: relative;
-        }
-        .profile-img-wrap {
-            width: 100%;
-            aspect-ratio: 4/3;
-            border-radius: 10px;
-            overflow: hidden;
-            background: #181820;
-            margin-bottom: 1.2rem;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-        .profile-img-wrap img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .profile-info h3 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.8rem;
-            letter-spacing: 1px;
-            margin-bottom: 0.3rem;
-        }
-        .profile-info p {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 1rem;
-        }
-        .tech-tags {
+        .pill-logo {
             display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-        .tech-tag {
-            padding: 0.3rem 0.7rem;
-            background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 4px;
-            font-family: 'Space Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--text-main);
-        }
-
-        /* Section Layout General */
-        section {
-            padding: 6rem 5%;
-        }
-        .section-header {
-            text-align: center;
-            margin-bottom: 3.5rem;
-        }
-        .section-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(2.5rem, 4vw, 3.8rem);
-            letter-spacing: 2px;
-        }
-        .section-title span {
-            color: var(--magenta);
-        }
-        .section-subtitle {
-            color: var(--text-muted);
-            font-size: 1rem;
-            max-width: 500px;
-            margin: 0.5rem auto 0;
-        }
-
-        /* Bento Grid Gallery */
-        .bento-gallery {
-            max-width: var(--container-max);
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-        }
-        .gallery-item {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            overflow: hidden;
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
-        .gallery-item:hover {
-            transform: translateY(-5px);
-            border-color: rgba(255, 255, 255, 0.25);
-        }
-        .gallery-item img {
-            width: 100%;
-            height: 240px;
-            object-fit: cover;
-            display: block;
-        }
-        .gallery-item-wide {
-            grid-column: span 2;
-        }
-        .item-info {
-            padding: 1.2rem;
-        }
-        .item-info h4 {
-            font-size: 1.1rem;
-            margin-bottom: 0.3rem;
-        }
-        .item-info p {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        /* Capabilities / Skills Section */
-        .skills-grid {
-            max-width: var(--container-max);
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-        }
-        .skill-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 2rem;
-        }
-        .skill-card h3 {
+            align-items: center;
+            gap: 0.6rem;
             font-family: 'Bebas Neue', sans-serif;
             font-size: 1.5rem;
             letter-spacing: 1px;
-            margin-bottom: 0.8rem;
-        }
-        .skill-card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
+            color: #fff;
+            text-decoration: none;
         }
 
-        /* Contact Section */
-        .contact-box {
-            max-width: 800px;
-            margin: 0 auto;
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 3rem;
-            text-align: center;
-        }
-        .contact-box h2 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-        .contact-box p {
-            color: var(--text-muted);
-            margin-bottom: 2rem;
+        .pill-logo-badge {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--cyan), var(--purple));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #000;
         }
 
-        /* Footer */
-        footer {
-            padding: 3rem 5%;
-            border-top: 1px solid var(--card-border);
-            text-align: center;
+        .pill-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .pill-links a {
             color: var(--text-muted);
+            text-decoration: none;
             font-size: 0.85rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
         }
 
-        /* Responsive Breakpoints */
-        @media (max-width: 900px) {
-            .hero-inner {
-                grid-template-columns: 1fr;
-                text-align: center;
-                gap: 3rem;
-            }
-            .hero-desc { margin: 0 auto 2rem; }
-            .hero-stats { justify-content: center; }
+        .pill-links a:hover {
+            color: var(--text-main);
+        }
+
+        .pill-btn {
+            background: #ffffff;
+            color: #0d0d12;
+            padding: 0.5rem 1.4rem;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .pill-btn:hover {
+            transform: scale(1.05);
+            background: var(--cyan);
+        }
+
+        /* 2. HERO SECTION TOP (Gaya Referensi) */
+        .hero-top-style {
+            position: relative;
+            min-height: 90vh;
+            padding-top: 7rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            overflow: hidden;
+            background: radial-gradient(circle at 50% 30%, rgba(124, 58, 237, 0.12), transparent 70%);
+        }
+
+        .hero-top-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 480px;
+            padding: 0 1rem;
+        }
+
+        /* Teks Raksasa di Belakang (PORTFOLIO) */
+        .giant-bg-text {
+            position: absolute;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(5rem, 16vw, 15rem);
+            line-height: 0.85;
+            letter-spacing: 4px;
+            font-weight: 900;
+            background: linear-gradient(90deg, #7c3aed, #ff2d6a, #00f0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0.85;
+            user-select: none;
+            z-index: 1;
+            text-align: center;
+            width: 100%;
+        }
+
+        /* Foto Cutout / Diri di Tengah */
+        .cutout-image-wrapper {
+            position: relative;
+            z-index: 2;
+            max-width: 420px;
+            width: 80%;
+            margin-top: 2rem;
+            filter: drop-shadow(0 15px 30px rgba(0,0,0,0.8));
+        }
+
+        .cutout-image-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: contain;
+        }
+
+        /* Teks Kiri Atas & Kanan Bawah */
+        .hero-meta-left {
+            position: absolute;
+            top: 15%;
+            left: 5%;
+            z-index: 3;
+            max-width: 220px;
+        }
+
+        .hero-meta-left span {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--cyan);
+            display: block;
+            margin-bottom: 0.3rem;
+            text-transform: uppercase;
+        }
+
+        .hero-meta-left h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .hero-meta-right {
+            position: absolute;
+            bottom: 12%;
+            right: 5%;
+            z-index: 3;
+            text-align: right;
+            max-width: 240px;
+        }
+
+        .hero-meta-right p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .hero-meta-right strong {
+            color: #fff;
+            display: block;
+            margin-top: 0.3rem;
+        }
+
+        /* 3. RUNNING STRIP / MARQUEE BAR DI BAWAH HERO */
+        .marquee-bar {
+            width: 100%;
+            background: linear-gradient(90deg, #7c3aed, #ff2d6a);
+            color: #fff;
+            padding: 0.8rem 0;
+            overflow: hidden;
+            white-space: nowrap;
+            display: flex;
+            position: relative;
+            z-index: 4;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.3);
+        }
+
+        .marquee-content {
+            display: flex;
+            gap: 2rem;
+            animation: marquee 20s linear infinite;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .marquee-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .marquee-item span.star {
+            color: var(--cyan);
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* REST OF SECTIONS */
+        section { padding: 6rem 5%; }
+        .section-header { text-align: center; margin-bottom: 3.5rem; }
+        .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 4vw, 3.8rem); letter-spacing: 2px; }
+        .section-title span { color: var(--magenta); }
+        .section-subtitle { color: var(--text-muted); font-size: 1rem; max-width: 500px; margin: 0.5rem auto 0; }
+
+        .bento-gallery {
+            max-width: var(--container-max); margin: 0 auto;
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+        }
+        .gallery-item {
+            background: var(--card-bg); border: 1px solid var(--card-border);
+            border-radius: 12px; overflow: hidden; transition: transform 0.3s ease;
+        }
+        .gallery-item:hover { transform: translateY(-5px); }
+        .gallery-item img { width: 100%; height: 240px; object-fit: cover; display: block; }
+        .gallery-item-wide { grid-column: span 2; }
+        .item-info { padding: 1.2rem; }
+
+        .skills-grid {
+            max-width: var(--container-max); margin: 0 auto;
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+        }
+        .skill-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 2rem; }
+        .skill-card h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; margin-bottom: 0.8rem; }
+        .skill-card p { color: var(--text-muted); font-size: 0.95rem; }
+
+        .contact-box {
+            max-width: 800px; margin: 0 auto; background: var(--card-bg);
+            border: 1px solid var(--card-border); border-radius: 16px; padding: 3rem; text-align: center;
+        }
+        .contact-box h2 { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; margin-bottom: 1rem; }
+
+        footer { padding: 3rem 5%; border-top: 1px solid var(--card-border); text-align: center; color: var(--text-muted); font-size: 0.85rem; }
+
+        @media (max-width: 768px) {
+            .pill-links { display: none; }
+            .hero-meta-left, .hero-meta-right { position: relative; top: auto; bottom: auto; left: auto; right: auto; text-align: center; margin: 1rem 0; }
             .bento-gallery, .skills-grid { grid-template-columns: 1fr; }
             .gallery-item-wide { grid-column: span 1; }
-            .nav-links { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Ambient Background Glows -->
-    <div class="ambient-glow glow-1"></div>
-    <div class="ambient-glow glow-2"></div>
-    <div class="ambient-glow glow-3"></div>
-
-    <!-- Header & Navigation -->
-    <nav>
-        <div class="nav-inner">
-            <div class="logo">
+    <!-- 1. FLOATING PILL NAVBAR -->
+    <div class="nav-wrapper">
+        <nav class="pill-navbar">
+            <a href="#" class="pill-logo">
+                <div class="pill-logo-badge">K</div>
                 KYO STUDIO
-                <span>Cinematography & Web Dev</span>
-            </div>
-            <ul class="nav-links">
-                <li><a href="#about">About</a></li>
-                <li><a href="#works">Works</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#contact">Contact</a></li>
+            </a>
+            <ul class="pill-links">
+                <li><a href="#about">Profil</a></li>
+                <li><a href="#works">Karya</a></li>
+                <li><a href="#skills">Keahlian</a></li>
+                <li><a href="#contact">Layanan</a></li>
             </ul>
-            <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">Let's Talk</button>
-        </div>
-    </nav>
+            <a href="#contact" class="pill-btn">Kontak</a>
+        </nav>
+    </div>
 
-    <!-- Hero Section -->
-    <section class="hero" id="about">
-        <div class="hero-inner">
-            <div class="hero-content">
-                <div class="hero-badge">Available for Visual & Web Projects</div>
-                <h1>
-                    VISUAL STORYTELLER <br>
-                    <span class="line-gradient">& FRONTEND DEV</span>
-                </h1>
-                <p class="hero-desc">
-                    Fokus pada pengoperasian kamera, komposisi lighting sinematik, video editing post-production, serta pengembangan web modern yang clean dan responsif.
-                </p>
-                <div class="hero-stats">
-                    <div>
-                        <div class="stat-value">50+</div>
-                        <div class="stat-label">Projects Completed</div>
-                    </div>
-                    <div>
-                        <div class="stat-value">4K</div>
-                        <div class="stat-label">Video Master Quality</div>
-                    </div>
-                    <div>
-                        <div class="stat-value">100%</div>
-                        <div class="stat-label">Client Satisfaction</div>
-                    </div>
-                </div>
+    <!-- 2. HERO SECTION TOP STYLE (Sesuai Referensi Gambar) -->
+    <section class="hero-top-style" id="about">
+        <div class="hero-top-container">
+            
+            <!-- Teks Kiri Atas -->
+            <div class="hero-meta-left">
+                <span>Cinematographer & Dev</span>
+                <h3>Visual Storyteller & Modern Web Creator</h3>
             </div>
 
-            <!-- Profile Card Showcase -->
-            <div class="profile-card">
-                <div class="profile-img-wrap">
-                    <!-- Ganti path src="images/profile.jpg" jika foto profil sudah dimasukkan ke folder images -->
-                    <img src="images/profile.jpg" alt="Kyo Photo Profile" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80'">
-                </div>
-                <div class="profile-info">
-                    <h3>KYO / M. RIZQI ALMUBARAK</h3>
-                    <p>Cinematographer, Editor & Frontend Web Developer berdomisili di Jember, Jawa Timur.</p>
-                    <div class="tech-tags">
-                        <span class="tech-tag">Fujifilm X-T2</span>
-                        <span class="tech-tag">Tailwind CSS</span>
-                        <span class="tech-tag">FL Studio</span>
-                        <span class="tech-tag">Photoshop</span>
-                    </div>
-                </div>
+            <!-- Teks Raksasa di Belakang -->
+            <div class="giant-bg-text">PORTFOLIO</div>
+
+            <!-- Foto Diri Cutout di Tengah -->
+            <!-- Tips: Masukkan foto kamu tanpa background (PNG transparan) ke images/profile-cutout.png -->
+            <div class="cutout-image-wrapper">
+                <img src="images/profile-cutout.png" alt="Kyo Profile" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80'">
+            </div>
+
+            <!-- Teks Kanan Bawah -->
+            <div class="hero-meta-right">
+                <p>Pengoperasian Kamera, Lighting & Web Interactive</p>
+                <strong>Based in Jember, ID</strong>
+            </div>
+
+        </div>
+
+        <!-- 3. MARQUEE BANNER STRIP -->
+        <div class="marquee-bar">
+            <div class="marquee-content">
+                <div class="marquee-item"><span>CINEMATOGRAPHY</span> <span class="star">✦</span></div>
+                <div class="marquee-item"><span>LIGHTING SETUP</span> <span class="star">✦</span></div>
+                <div class="marquee-item"><span>FRONTEND WEB DEV</span> <span class="star">✦</span></div>
+                <div class="marquee-item"><span>VIDEO EDITING</span> <span class="star">✦</span></div>
+                <div class="marquee-item"><span>FUJIFILM X-T2</span> <span class="star">✦</span></div>
+                <div class="marquee-item"><span>TAILWIND CSS</span> <span class="star">✦</span></div>
+                <!-- Duplicate untuk continuous loop -->
+                <div class="marquee-item"><span>CINEMATOGRAPHY</span> <span class="star">✦</span></div>
+                <div class="marquee-item"><span>LIGHTING SETUP</span> <span class="star">✦</span></div>
+                <div class="marquee-item"><span>FRONTEND WEB DEV</span> <span class="star">✦</span></div>
+                <div class="marquee-item"><span>VIDEO EDITING</span> <span class="star">✦</span></div>
             </div>
         </div>
     </section>
 
-    <!-- Bento Gallery Section -->
+    <!-- SECTION PORTFOLIO WORKS -->
     <section id="works">
         <div class="section-header">
             <h2 class="section-title">SELECTED <span>WORKS</span></h2>
@@ -486,7 +419,7 @@
         </div>
     </section>
 
-    <!-- Skills Section -->
+    <!-- KEAHLIAN SECTION -->
     <section id="skills">
         <div class="section-header">
             <h2 class="section-title">CORE <span>CAPABILITIES</span></h2>
@@ -509,21 +442,20 @@
         </div>
     </section>
 
-    <!-- Contact CTA Section -->
+    <!-- CONTACT SECTION -->
     <section id="contact">
         <div class="contact-box">
             <h2>LET'S CREATE SOMETHING GREAT</h2>
             <p>Punya proyek video sinematik atau butuh pembuatan web interaktif? Mari berdiskusi.</p>
-            <!-- Ganti nomor WhatsApp di bawah jika perlu -->
-            <button class="nav-cta" style="padding: 0.9rem 2rem; font-size: 0.9rem;" onclick="window.open('https://wa.me/', '_blank')">
-                CHAT VIA WHATSAPP
-            </button>
+            <a href="https://wa.me/" target="_blank" class="pill-btn" style="display: inline-block; padding: 0.9rem 2.5rem; font-size: 1rem;">
+                HUBUNGI VIA WHATSAPP
+            </a>
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- FOOTER -->
     <footer>
-        <p>© 2026 KYO Studio. Built with HTML, Tailwind & Custom Styling.</p>
+        <p>© 2026 KYO Studio. All rights reserved.</p>
     </footer>
 
 </body>
