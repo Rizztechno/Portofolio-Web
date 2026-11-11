@@ -4,530 +4,260 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KYO — Portfolio & Creative Studio</title>
+    <meta name="description" content="Portofolio KYO Studio: sinematografi, lighting, video editing, dan frontend web development. Based in Jember, ID.">
+    <meta name="theme-color" content="#0d0d12">
 
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-    <style>
-        :root {
-            --cyan: #00f0ff;
-            --magenta: #ff2d6a;
-            --purple: #7c3aed;
-            --dark-bg: #0d0d12;
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --card-border: rgba(255, 255, 255, 0.08);
-            --text-main: #e8e8ed;
-            --text-muted: #8e8e9f;
-            --container-max: 1100px;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body { font-family: 'Outfit', sans-serif; background: var(--dark-bg); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
-
-        /* 1. FLOATING NAVBAR FIX & DROPDOWN SUPPORT */
-        .nav-wrapper {
-            position: fixed;
-            top: 1.2rem;
-            left: 0; right: 0;
-            display: flex;
-            justify-content: center;
-            z-index: 1000;
-            padding: 0 1rem;
-        }
-
-        .pill-navbar {
-            background: rgba(25, 25, 35, 0.95);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 40px;
-            padding: 0.4rem 0.8rem 0.4rem 0.8rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            max-width: 920px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-            position: relative;
-        }
-
-        .pill-logo {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.5rem;
-            letter-spacing: 1px;
-            color: #fff;
-            text-decoration: none;
-        }
-
-        /* FRAME LOGO KOTAK (BIAR LOGO KELIATAN JELAS) */
-        .pill-logo-video {
-            width: 44px !important;
-            height: 44px !important;
-            min-width: 44px !important;
-            min-height: 44px !important;
-            border-radius: 10px !important; /* Dibuat Kotak Rounded */
-            overflow: hidden !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            border: 1.5px solid rgba(255, 255, 255, 0.25);
-            box-shadow: 0 0 12px rgba(0, 240, 255, 0.25);
-            background: #121218;
-            flex-shrink: 0;
-        }
-
-        .pill-logo-video video,
-        .pill-logo-video img {
-            width: 100% !important;
-            height: 100% !important;
-            object-fit: contain !important; /* Gambar/video masuk penuh tanpa terpotong */
-            display: block !important;
-            padding: 2px;
-        }
-
-        .pill-nav-right {
-            display: flex;
-            align-items: center;
-            gap: 1.2rem;
-        }
-
-        .pill-links { 
-            display: flex; 
-            gap: 1.5rem; 
-            list-style: none; 
-            align-items: center;
-        }
-
-        .pill-links a { 
-            color: var(--text-muted); 
-            text-decoration: none; 
-            font-size: 0.85rem; 
-            font-weight: 500; 
-            transition: color 0.2s ease; 
-        }
-
-        .pill-links a:hover { color: var(--text-main); }
-
-        .pill-btn { 
-            background: #ffffff; 
-            color: #0d0d12; 
-            padding: 0.5rem 1.4rem; 
-            border-radius: 30px; 
-            font-weight: 700; 
-            font-size: 0.85rem; 
-            text-decoration: none; 
-            transition: transform 0.2s ease, background 0.2s ease;
-            white-space: nowrap;
-        }
-
-        .pill-btn:hover { transform: scale(1.05); background: var(--cyan); }
-
-        /* TOMBOL HAMBURGER (DROP LIST MENU) */
-        .menu-toggle {
-            display: none;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #fff;
-            padding: 0.5rem 0.8rem;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            cursor: pointer;
-        }
-
-        /* DROPDOWN MENU UNTUK TAMPILAN TERZOOM / MOBILE */
-        .dropdown-menu {
-            display: none;
-            position: absolute;
-            top: calc(100% + 0.8rem);
-            left: 0; right: 0;
-            background: rgba(18, 18, 26, 0.98);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 16px;
-            padding: 1rem;
-            flex-direction: column;
-            gap: 0.8rem;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.8);
-            z-index: 999;
-        }
-
-        .dropdown-menu.active {
-            display: flex;
-        }
-
-        .dropdown-menu a {
-            color: var(--text-main);
-            text-decoration: none;
-            font-size: 0.95rem;
-            padding: 0.6rem 1rem;
-            border-radius: 8px;
-            transition: background 0.2s ease;
-        }
-
-        .dropdown-menu a:hover {
-            background: rgba(255, 255, 255, 0.06);
-        }
-
-        /* 2. HERO SECTION TOP STYLE */
-        .hero-top-style {
-            position: relative;
-            min-height: 90vh;
-            padding-top: 7.5rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            overflow: hidden;
-            background: radial-gradient(circle at 50% 30%, rgba(124, 58, 237, 0.15), transparent 70%);
-        }
-
-        .hero-top-container {
-            position: relative;
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 480px;
-            padding: 0 1rem;
-        }
-
-        .giant-bg-text {
-            position: absolute;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(4.5rem, 15vw, 15rem);
-            line-height: 0.85;
-            letter-spacing: 4px;
-            font-weight: 900;
-            background: linear-gradient(90deg, #7c3aed, #ff2d6a, #00f0ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            opacity: 0.85;
-            user-select: none;
-            z-index: 1;
-            text-align: center;
-            width: 100%;
-        }
-
-        .cutout-image-wrapper {
-            position: relative;
-            z-index: 2;
-            max-width: 380px;
-            width: 75%;
-            margin-top: 1.5rem;
-            filter: drop-shadow(0 15px 30px rgba(0,0,0,0.8));
-        }
-
-        .cutout-image-wrapper img {
-            width: 100%;
-            height: auto;
-            display: block;
-            object-fit: contain;
-        }
-
-        .hero-meta-left {
-            position: absolute;
-            top: 15%;
-            left: 5%;
-            z-index: 3;
-            max-width: 220px;
-        }
-
-        .hero-meta-left span {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.8rem;
-            color: var(--cyan);
-            display: block;
-            margin-bottom: 0.3rem;
-            text-transform: uppercase;
-        }
-
-        .hero-meta-left h3 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            line-height: 1.3;
-        }
-
-        .hero-meta-right {
-            position: absolute;
-            bottom: 15%;
-            right: 5%;
-            z-index: 3;
-            text-align: right;
-            max-width: 240px;
-        }
-
-        .hero-meta-right p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            line-height: 1.4;
-        }
-
-        .hero-meta-right strong {
-            color: #fff;
-            display: block;
-            margin-top: 0.3rem;
-        }
-
-        /* MARQUEE BANNER */
-        .marquee-bar {
-            width: 100%;
-            background: linear-gradient(90deg, #7c3aed, #ff2d6a);
-            color: #fff;
-            padding: 0.8rem 0;
-            overflow: hidden;
-            white-space: nowrap;
-            display: flex;
-            position: relative;
-            z-index: 4;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.3);
-        }
-
-        .marquee-content {
-            display: flex;
-            gap: 2rem;
-            animation: marquee 20s linear infinite;
-            font-family: 'Space Mono', monospace;
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .marquee-item { display: flex; align-items: center; gap: 0.8rem; }
-        .marquee-item span.star { color: var(--cyan); }
-
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        /* SECTIONS GENERAL */
-        section { padding: 6rem 5%; }
-        .section-header { text-align: center; margin-bottom: 3.5rem; }
-        .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 4vw, 3.8rem); letter-spacing: 2px; }
-        .section-title span { color: var(--magenta); }
-        .section-subtitle { color: var(--text-muted); font-size: 1rem; max-width: 500px; margin: 0.5rem auto 0; }
-
-        .bento-gallery {
-            max-width: var(--container-max); margin: 0 auto;
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
-        }
-        .gallery-item {
-            background: var(--card-bg); border: 1px solid var(--card-border);
-            border-radius: 12px; overflow: hidden; transition: transform 0.3s ease;
-        }
-        .gallery-item:hover { transform: translateY(-5px); }
-        .gallery-item img { width: 100%; height: 240px; object-fit: cover; display: block; }
-        .gallery-item-wide { grid-column: span 2; }
-        .item-info { padding: 1.2rem; }
-
-        .skills-grid {
-            max-width: var(--container-max); margin: 0 auto;
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
-        }
-        .skill-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 2rem; }
-        .skill-card h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; margin-bottom: 0.8rem; }
-        .skill-card p { color: var(--text-muted); font-size: 0.95rem; }
-
-        .contact-box {
-            max-width: 800px; margin: 0 auto; background: var(--card-bg);
-            border: 1px solid var(--card-border); border-radius: 16px; padding: 3rem; text-align: center;
-        }
-        .contact-box h2 { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; margin-bottom: 1rem; }
-
-        footer { padding: 3rem 5%; border-top: 1px solid var(--card-border); text-align: center; color: var(--text-muted); font-size: 0.85rem; }
-
-        /* RESPONSIVE BREAKPOINT (SAAT ZOOM / TAMPILAN HP) */
-        @media (max-width: 860px) {
-            .pill-links { display: none; } /* Sembunyikan link biasa saat ter-zoom */
-            .menu-toggle { display: block; } /* Tampilkan tombol drop list */
-
-            .hero-top-container { flex-direction: column; justify-content: center; min-height: 400px; }
-            .hero-meta-left, .hero-meta-right { position: relative; top: auto; bottom: auto; left: auto; right: auto; text-align: center; margin: 1rem 0; }
-            .bento-gallery, .skills-grid { grid-template-columns: 1fr; }
-            .gallery-item-wide { grid-column: span 1; }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- NAVBAR DENGAN LOGO KOTAK & DROP LIST RESPONSIVE -->
-    <div class="nav-wrapper">
-        <nav class="pill-navbar">
-            <a href="#" class="pill-logo">
-                <div class="pill-logo-video">
-                    <video autoplay loop muted playsinline>
+    <!-- Progress scroll -->
+    <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+    <!-- NAVBAR -->
+    <header class="nav-wrapper">
+        <nav class="pill-navbar" aria-label="Navigasi utama">
+            <a href="#home" class="pill-logo" aria-label="KYO Studio - beranda">
+                <span class="logo-frame">
+                    <video autoplay loop muted playsinline preload="metadata" poster="images/profile.jpg">
                         <source src="images/logo-loop.mp4" type="video/mp4">
-                        <img src="images/profile.jpg" alt="Logo">
                     </video>
-                </div>
-                KYO STUDIO
+                </span>
+                <span>KYO STUDIO</span>
             </a>
 
             <div class="pill-nav-right">
-                <!-- Links Desktop -->
                 <ul class="pill-links">
-                    <li><a href="#about">Profil</a></li>
-                    <li><a href="#works">Karya</a></li>
-                    <li><a href="#skills">Keahlian</a></li>
-                    <li><a href="#contact">Layanan</a></li>
+                    <li><a href="#home" data-link>Beranda</a></li>
+                    <li><a href="#about" data-link>Tentang</a></li>
+                    <li><a href="#works" data-link>Karya</a></li>
+                    <li><a href="#skills" data-link>Keahlian</a></li>
+                    <li><a href="#contact" data-link>Kontak</a></li>
                 </ul>
 
-                <a href="#contact" class="pill-btn">Kontak</a>
+                <a href="#contact" class="btn btn-light btn-sm">Hire Me</a>
 
-                <!-- Tombol Drop List (Muncul saat Zoom/Mobile) -->
-                <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">☰</button>
+                <button class="menu-toggle" id="menuToggle" aria-label="Buka menu" aria-expanded="false" aria-controls="dropdownMenu">
+                    <span></span><span></span>
+                </button>
             </div>
 
-            <!-- Dropdown List Menu saat Zoom -->
             <div class="dropdown-menu" id="dropdownMenu">
-                <a href="#about" onclick="closeDropdown()">Profil</a>
-                <a href="#works" onclick="closeDropdown()">Karya</a>
-                <a href="#skills" onclick="closeDropdown()">Keahlian</a>
-                <a href="#contact" onclick="closeDropdown()">Layanan</a>
+                <a href="#home">Beranda</a>
+                <a href="#about">Tentang</a>
+                <a href="#works">Karya</a>
+                <a href="#skills">Keahlian</a>
+                <a href="#contact">Kontak</a>
             </div>
         </nav>
-    </div>
+    </header>
 
-    <!-- HERO TOP SECTION -->
-    <section class="hero-top-style" id="about">
-        <div class="hero-top-container">
-            <div class="hero-meta-left">
-                <span>Cinematographer & Dev</span>
-                <h3>Visual Storyteller & Modern Web Creator</h3>
-            </div>
+    <main>
+        <!-- HERO -->
+        <section class="hero" id="home">
+            <div class="hero-stage">
+                <div class="hero-meta hero-meta-left reveal">
+                    <span class="mono-tag">Cinematographer &amp; Dev</span>
+                    <h2>Visual Storyteller &amp; Modern Web Creator</h2>
+                </div>
 
-            <div class="giant-bg-text">PORTFOLIO</div>
+                <h1 class="giant-text" aria-label="Portfolio">PORTFOLIO</h1>
 
-            <div class="cutout-image-wrapper">
-                <img src="images/profile-cutout.png" alt="Kyo Profile" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80'">
-            </div>
+                <div class="cutout">
+                    <img src="images/profile-cutout.png" alt="Foto profil Kyo" width="380" height="480" fetchpriority="high"
+                         onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=70'">
+                </div>
 
-            <div class="hero-meta-right">
-                <p>Pengoperasian Kamera, Lighting & Web Interactive</p>
-                <strong>Based in Jember, ID</strong>
-            </div>
-        </div>
-
-        <!-- MARQUEE BANNER -->
-        <div class="marquee-bar">
-            <div class="marquee-content">
-                <div class="marquee-item"><span>CINEMATOGRAPHY</span> <span class="star">✦</span></div>
-                <div class="marquee-item"><span>LIGHTING SETUP</span> <span class="star">✦</span></div>
-                <div class="marquee-item"><span>FRONTEND WEB DEV</span> <span class="star">✦</span></div>
-                <div class="marquee-item"><span>VIDEO EDITING</span> <span class="star">✦</span></div>
-                <div class="marquee-item"><span>FUJIFILM X-T2</span> <span class="star">✦</span></div>
-                <div class="marquee-item"><span>TAILWIND CSS</span> <span class="star">✦</span></div>
-                <!-- Loop Duplicate -->
-                <div class="marquee-item"><span>CINEMATOGRAPHY</span> <span class="star">✦</span></div>
-                <div class="marquee-item"><span>LIGHTING SETUP</span> <span class="star">✦</span></div>
-                <div class="marquee-item"><span>FRONTEND WEB DEV</span> <span class="star">✦</span></div>
-                <div class="marquee-item"><span>VIDEO EDITING</span> <span class="star">✦</span></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- WORKS SECTION -->
-    <section id="works">
-        <div class="section-header">
-            <h2 class="section-title">SELECTED <span>WORKS</span></h2>
-            <p class="section-subtitle">Kumpulan portofolio sinematografi, liputan event, dan web development.</p>
-        </div>
-
-        <div class="bento-gallery">
-            <div class="gallery-item gallery-item-wide">
-                <img src="images/project-teaser.jpg" alt="Teaser POSSMA" onerror="this.src='https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&w=1200&q=80'">
-                <div class="item-info">
-                    <h4>Teaser Commercial POSSMA Event</h4>
-                    <p>Cinematography, Lighting Composition & Color Grading</p>
+                <div class="hero-meta hero-meta-right reveal">
+                    <p>Pengoperasian Kamera, Lighting &amp; Web Interactive</p>
+                    <strong>Based in Jember, ID</strong>
                 </div>
             </div>
 
-            <div class="gallery-item">
-                <img src="images/project-web.jpg" alt="Web Arthevality" onerror="this.src='https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80'">
-                <div class="item-info">
-                    <h4>ARTHEVALITY Web Batch</h4>
-                    <p>Frontend Design with HTML & Tailwind CSS</p>
+            <div class="hero-cta reveal">
+                <a href="#works" class="btn btn-primary">Lihat Karya</a>
+                <a href="#contact" class="btn btn-ghost">Mulai Proyek</a>
+            </div>
+
+            <!-- Marquee -->
+            <div class="marquee" aria-hidden="true">
+                <div class="marquee-track">
+                    <div class="marquee-group">
+                        <span>CINEMATOGRAPHY</span><i>✦</i>
+                        <span>LIGHTING SETUP</span><i>✦</i>
+                        <span>FRONTEND WEB DEV</span><i>✦</i>
+                        <span>VIDEO EDITING</span><i>✦</i>
+                        <span>FUJIFILM X-T2</span><i>✦</i>
+                        <span>TAILWIND CSS</span><i>✦</i>
+                    </div>
+                    <div class="marquee-group">
+                        <span>CINEMATOGRAPHY</span><i>✦</i>
+                        <span>LIGHTING SETUP</span><i>✦</i>
+                        <span>FRONTEND WEB DEV</span><i>✦</i>
+                        <span>VIDEO EDITING</span><i>✦</i>
+                        <span>FUJIFILM X-T2</span><i>✦</i>
+                        <span>TAILWIND CSS</span><i>✦</i>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <div class="gallery-item">
-                <img src="images/project-photo.jpg" alt="Fujifilm Session" onerror="this.src='https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80'">
-                <div class="item-info">
-                    <h4>Mood Photography Session</h4>
-                    <p>Shot using Fujifilm X-T2 Setup</p>
+        <!-- ABOUT -->
+        <section id="about" class="section">
+            <div class="section-header reveal">
+                <h2 class="section-title">TENTANG <span>SAYA</span></h2>
+                <p class="section-subtitle">Mengenal lebih dekat sosok di balik lensa dan kode.</p>
+            </div>
+
+            <div class="about-grid">
+                <div class="about-photo reveal">
+                    <div class="about-photo-frame">
+                        <img src="images/profile.jpg" alt="Foto Kyo" loading="lazy" width="480" height="600"
+                             onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=700&q=70'">
+                    </div>
+                    <span class="about-tag mono-tag">📍 Jember, Indonesia</span>
+                </div>
+
+                <div class="about-text reveal" style="--i:1">
+                    <span class="mono-tag">Halo, saya Kyo</span>
+                    <h3>Visual storyteller yang juga membangun web.</h3>
+                    <p>Saya seorang cinematographer sekaligus frontend developer yang suka menggabungkan dua dunia: visual sinematik dan pengalaman web yang interaktif. Dari penataan lighting dan pengambilan gambar, sampai color grading dan membangun tampilan website, saya menangani prosesnya dengan detail.</p>
+                    <p>Beberapa proyek yang pernah saya kerjakan antara lain teaser event POSSMA, web ARTHEVALITY, dan toko digital Qiza Store. Saya selalu berusaha membuat hasil yang rapi, enak dilihat, dan nyaman dipakai di perangkat apa pun.</p>
+
+                    <ul class="about-facts">
+                        <li><strong>Fokus</strong><span>Video sinematik &amp; web interaktif</span></li>
+                        <li><strong>Kamera</strong><span>Fujifilm X-T2</span></li>
+                        <li><strong>Stack</strong><span>HTML, Tailwind CSS, JavaScript</span></li>
+                        <li><strong>Lokasi</strong><span>Jember, ID</span></li>
+                    </ul>
+
+                    <div class="about-tools">
+                        <span class="chip-static">Cinematography</span>
+                        <span class="chip-static">Lighting</span>
+                        <span class="chip-static">Color Grading</span>
+                        <span class="chip-static">Video Editing</span>
+                        <span class="chip-static">Frontend Dev</span>
+                        <span class="chip-static">Tailwind CSS</span>
+                    </div>
+
+                    <a href="#contact" class="btn btn-primary">Ajak Kolaborasi</a>
                 </div>
             </div>
+        </section>
 
-            <div class="gallery-item gallery-item-wide">
-                <img src="images/project-qiza.jpg" alt="Qiza Store" onerror="this.src='https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80'">
-                <div class="item-info">
-                    <h4>Qiza Store Digital Storefront</h4>
-                    <p>Responsive Web & WhatsApp Automation Integration</p>
-                </div>
+        <!-- WORKS -->
+        <section id="works" class="section">
+            <div class="section-header reveal">
+                <h2 class="section-title">SELECTED <span>WORKS</span></h2>
+                <p class="section-subtitle">Kumpulan portofolio sinematografi, liputan event, dan web development.</p>
             </div>
-        </div>
-    </section>
 
-    <!-- SKILLS SECTION -->
-    <section id="skills">
-        <div class="section-header">
-            <h2 class="section-title">CORE <span>CAPABILITIES</span></h2>
-            <p class="section-subtitle">Kombinasi keahlian teknis visual dan pemrograman digital.</p>
-        </div>
-
-        <div class="skills-grid">
-            <div class="skill-card">
-                <h3>CINEMATOGRAPHY & LIGHTING</h3>
-                <p>Pengoperasian kamera Fujifilm X-T2, penataan lighting studio/lokasi, dan pengambilan gambar dengan komposisi sinematik.</p>
+            <div class="filters reveal" role="tablist" aria-label="Filter karya">
+                <button class="chip is-active" data-filter="all" role="tab" aria-selected="true">Semua</button>
+                <button class="chip" data-filter="video" role="tab" aria-selected="false">Video</button>
+                <button class="chip" data-filter="web" role="tab" aria-selected="false">Web</button>
+                <button class="chip" data-filter="photo" role="tab" aria-selected="false">Foto</button>
             </div>
-            <div class="skill-card">
-                <h3>FRONTEND DEVELOPMENT</h3>
-                <p>Pengembangan website responsif dengan struktur HTML5 yang bersih, utilitas Tailwind CSS, dan scripting JavaScript interaktif.</p>
-            </div>
-            <div class="skill-card">
-                <h3>POST-PRODUCTION EDITING</h3>
-                <p>Video cutting yang berirama presisi, color grading moody/cinematic, dan retouching aset grafis untuk kebutuhan publikasi.</p>
-            </div>
-        </div>
-    </section>
 
-    <!-- CONTACT SECTION -->
-    <section id="contact">
-        <div class="contact-box">
-            <h2>LET'S CREATE SOMETHING GREAT</h2>
-            <p>Punya proyek video sinematik atau butuh pembuatan web interaktif? Mari berdiskusi.</p>
-            <a href="https://wa.me/" target="_blank" class="pill-btn" style="display: inline-block; padding: 0.9rem 2.5rem; font-size: 1rem;">
-                HUBUNGI VIA WHATSAPP
-            </a>
-        </div>
-    </section>
+            <div class="bento" id="bento">
+                <article class="card card-wide reveal" data-cat="video" style="--i:0">
+                    <div class="card-media">
+                        <img src="images/project-teaser.jpg" alt="Teaser POSSMA" loading="lazy" width="1200" height="640"
+                             onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&w=1000&q=70'">
+                        <span class="badge">Video</span>
+                    </div>
+                    <div class="card-info">
+                        <h3>Teaser Commercial POSSMA Event</h3>
+                        <p>Cinematography, Lighting Composition &amp; Color Grading</p>
+                    </div>
+                </article>
 
-    <!-- FOOTER -->
-    <footer>
+                <article class="card reveal" data-cat="web" style="--i:1">
+                    <div class="card-media">
+                        <img src="images/project-web.jpg" alt="Web Arthevality" loading="lazy" width="800" height="640"
+                             onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=700&q=70'">
+                        <span class="badge">Web</span>
+                    </div>
+                    <div class="card-info">
+                        <h3>ARTHEVALITY Web Batch</h3>
+                        <p>Frontend Design with HTML &amp; Tailwind CSS</p>
+                    </div>
+                </article>
+
+                <article class="card reveal" data-cat="photo" style="--i:2">
+                    <div class="card-media">
+                        <img src="images/project-photo.jpg" alt="Fujifilm Session" loading="lazy" width="800" height="640"
+                             onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=700&q=70'">
+                        <span class="badge">Foto</span>
+                    </div>
+                    <div class="card-info">
+                        <h3>Mood Photography Session</h3>
+                        <p>Shot using Fujifilm X-T2 Setup</p>
+                    </div>
+                </article>
+
+                <article class="card card-wide reveal" data-cat="web" style="--i:3">
+                    <div class="card-media">
+                        <img src="images/project-qiza.jpg" alt="Qiza Store" loading="lazy" width="1200" height="640"
+                             onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1000&q=70'">
+                        <span class="badge">Web</span>
+                    </div>
+                    <div class="card-info">
+                        <h3>Qiza Store Digital Storefront</h3>
+                        <p>Responsive Web &amp; WhatsApp Automation Integration</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- SKILLS -->
+        <section id="skills" class="section">
+            <div class="section-header reveal">
+                <h2 class="section-title">CORE <span>CAPABILITIES</span></h2>
+                <p class="section-subtitle">Kombinasi keahlian teknis visual dan pemrograman digital.</p>
+            </div>
+
+            <div class="skills">
+                <article class="skill card-lite reveal" style="--i:0">
+                    <div class="skill-icon" aria-hidden="true">🎥</div>
+                    <h3>CINEMATOGRAPHY &amp; LIGHTING</h3>
+                    <p>Pengoperasian kamera Fujifilm X-T2, penataan lighting studio/lokasi, dan pengambilan gambar dengan komposisi sinematik.</p>
+                </article>
+                <article class="skill card-lite reveal" style="--i:1">
+                    <div class="skill-icon" aria-hidden="true">💻</div>
+                    <h3>FRONTEND DEVELOPMENT</h3>
+                    <p>Pengembangan website responsif dengan struktur HTML5 yang bersih, utilitas Tailwind CSS, dan scripting JavaScript interaktif.</p>
+                </article>
+                <article class="skill card-lite reveal" style="--i:2">
+                    <div class="skill-icon" aria-hidden="true">🎞️</div>
+                    <h3>POST-PRODUCTION EDITING</h3>
+                    <p>Video cutting yang berirama presisi, color grading moody/cinematic, dan retouching aset grafis untuk kebutuhan publikasi.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact" class="section">
+            <div class="contact-box reveal">
+                <h2>LET'S CREATE <span>SOMETHING GREAT</span></h2>
+                <p>Punya proyek video sinematik atau butuh pembuatan web interaktif? Mari berdiskusi.</p>
+                <!-- Ganti 62xxxxxxxxxx dengan nomor WhatsApp kamu (format internasional tanpa +) -->
+                <a href="https://wa.me/62xxxxxxxxxx?text=Halo%20KYO%2C%20saya%20tertarik%20dengan%20layanan%20kamu" target="_blank" rel="noopener" class="btn btn-primary btn-lg">
+                    HUBUNGI VIA WHATSAPP
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
         <p>© 2026 KYO Studio. All rights reserved.</p>
+        <a href="#home" class="to-top" aria-label="Kembali ke atas">↑ Atas</a>
     </footer>
 
-    <!-- SCRIPT DROPDOWN TOGGLE -->
-    <script>
-        const menuToggle = document.getElementById('menuToggle');
-        const dropdownMenu = document.getElementById('dropdownMenu');
-
-        menuToggle.addEventListener('click', () => {
-            dropdownMenu.classList.toggle('active');
-        });
-
-        function closeDropdown() {
-            dropdownMenu.classList.remove('active');
-        }
-    </script>
+    <script src="script.js" defer></script>
 </body>
 </html>
