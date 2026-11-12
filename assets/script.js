@@ -2,7 +2,7 @@
     'use strict';
 
     /* Ganti dengan nomor WhatsApp kamu (format internasional tanpa +), contoh: 6281234567890 */
-    const WA_NUMBER = '62xxxxxxxxxx';
+    const WA_NUMBER = '6282233129573';
 
     const $ = (s, c = document) => c.querySelector(s);
     const $$ = (s, c = document) => [...c.querySelectorAll(s)];
