@@ -185,17 +185,51 @@ button { font: inherit; cursor: pointer; }
 .section-title span, .contact-box h2 span { color: var(--magenta); }
 .section-subtitle { color: var(--muted); max-width: 520px; margin: .6rem auto 0; }
 
-/* Filters */
-.filters { display: flex; gap: .5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
-.chip {
-    padding: .45rem 1.2rem; border-radius: 999px;
-    background: var(--card-bg); color: var(--muted); border: 1px solid var(--card-border);
-    font-size: .88rem; font-weight: 500; transition: all .25s;
+/* ============ FOLDER INTERAKTIF ============ */
+.folder-grid {
+    max-width: var(--container); margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;
 }
-.chip:hover { color: var(--text); border-color: rgba(255, 255, 255, .25); }
-.chip.is-active { background: #fff; color: var(--bg); border-color: #fff; }
+.folder-card {
+    position: relative; background: var(--card-bg);
+    border: 1px solid var(--card-border); border-radius: 16px;
+    padding: 1.2rem; cursor: pointer;
+    transition: transform .35s var(--ease), border-color .35s, box-shadow .35s, background .35s;
+    backdrop-filter: blur(12px);
+}
+.folder-card:hover, .folder-card:focus-visible {
+    transform: translateY(-8px) scale(1.02);
+    border-color: rgba(0, 240, 255, 0.4);
+    box-shadow: 0 15px 35px rgba(0, 240, 255, 0.15), 0 0 15px rgba(124, 58, 237, 0.2);
+    background: rgba(255, 255, 255, 0.06);
+}
+.folder-tab {
+    position: absolute; top: -12px; left: 1.5rem;
+    background: linear-gradient(135deg, var(--cyan), var(--purple));
+    color: var(--bg); font-family: 'Space Mono', monospace; font-size: .7rem; font-weight: 700;
+    padding: .2rem .8rem; border-radius: 6px; letter-spacing: 1px;
+}
+.folder-cover {
+    width: 100%; height: 180px; border-radius: 10px; overflow: hidden;
+    margin-bottom: 1rem; border: 1px solid rgba(255, 255, 255, 0.05); background: #15151d;
+}
+.folder-cover img {
+    width: 100%; height: 100%; object-fit: cover; transition: transform .5s var(--ease);
+}
+.folder-card:hover .folder-cover img { transform: scale(1.08); }
+.folder-info h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 1px; margin-bottom: .2rem; color: #fff; }
+.folder-info p { font-size: .85rem; color: var(--muted); }
 
-/* ============ CARDS ============ */
+/* DETAIL VIEW SECTION */
+.category-detail-view { display: none; }
+.category-detail-view.active { display: block; }
+.detail-navigation {
+    max-width: var(--container); margin: 0 auto 2rem;
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+}
+.current-folder-title { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 1px; color: var(--cyan); }
+
+/* ============ CARDS & BENTO ============ */
 .bento { max-width: var(--container); margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
 .card, .card-lite {
     position: relative; overflow: hidden;
@@ -204,8 +238,8 @@ button { font: inherit; cursor: pointer; }
 }
 .card-wide { grid-column: span 2; }
 
-/* spotlight (diisi via JS, hanya di perangkat hover) */
-.card::before, .card-lite::before {
+/* Spotlight hover */
+.card::before, .card-lite::before, .folder-card::before {
     content: ''; position: absolute; inset: 0; z-index: 2; pointer-events: none;
     background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(0, 240, 255, .12), transparent 70%);
     opacity: 0; transition: opacity .3s;
@@ -299,17 +333,16 @@ button { font: inherit; cursor: pointer; }
 .to-top { text-decoration: none; transition: color .2s; }
 .to-top:hover { color: var(--cyan); }
 
-/* ============ REVEAL (ringan: opacity + transform) ============ */
+/* ============ REVEAL ============ */
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s var(--ease), transform .7s var(--ease); transition-delay: calc(var(--i, 0) * 90ms); }
 .reveal.is-visible { opacity: 1; transform: none; }
 
-/* Hover hanya untuk perangkat dengan mouse */
+/* Hover khusus perangkat mouse */
 @media (hover: hover) and (pointer: fine) {
     .card:hover, .card-lite:hover { transform: translateY(-6px); border-color: rgba(0, 240, 255, .3); }
-    .card:hover::before, .card-lite:hover::before { opacity: 1; }
+    .card:hover::before, .card-lite:hover::before, .folder-card:hover::before { opacity: 1; }
     .card:hover .card-media img { transform: scale(1.06); }
     .skill:hover .skill-icon { transform: rotate(-8deg) scale(1.1); }
-    /* setelah reveal selesai, hover tidak terhalang delay */
     .reveal.is-visible { transition-delay: 0ms; }
 }
 
@@ -327,7 +360,7 @@ button { font: inherit; cursor: pointer; }
     .hero-meta-left { order: 0; }
     .hero-meta-right { text-align: center; }
 
-    .bento, .skills { grid-template-columns: 1fr; gap: 1.1rem; }
+    .folder-grid, .bento, .skills { grid-template-columns: 1fr; gap: 1.2rem; }
     .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
     .about-photo { max-width: 320px; }
     .about-photo::before { inset: 10px -8px -10px 8px; }
@@ -335,6 +368,7 @@ button { font: inherit; cursor: pointer; }
     .skill { padding: 1.5rem; }
     .contact-box { padding: 2.5rem 1.25rem; }
     .footer { justify-content: center; text-align: center; }
+    .detail-navigation { flex-direction: column; align-items: flex-start; }
 }
 
 @media (min-width: 861px) and (max-width: 1024px) {
@@ -349,7 +383,7 @@ button { font: inherit; cursor: pointer; }
     .hero-cta .btn { flex: 1; }
 }
 
-/* ============ HEMAT DAYA / AKSESIBILITAS ============ */
+/* ============ AKSESIBILITAS ============ */
 @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
