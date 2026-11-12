@@ -5,20 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KYO — Portfolio & Creative Studio</title>
     <meta name="description" content="Portofolio KYO Studio: sinematografi, lighting, video editing, dan frontend web development. Based in Jember, ID.">
-    <meta name="theme-color" content="#0d0d12">
+    <meta name="theme-color" content="#050510">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="style.css">
+    <noscript><style>.loader{display:none}.reveal{opacity:1;transform:none}</style></noscript>
 </head>
 <body>
 
-    <!-- Progress scroll -->
+    <!-- LOADING SCREEN -->
+    <div class="loader" id="loader" aria-hidden="true">
+        <div class="loader-inner">
+            <div class="loader-logo">KYO</div>
+            <div class="loader-bar"></div>
+        </div>
+    </div>
+
     <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
-    <!-- NAVBAR -->
+    <!-- NAVBAR (pill + droplist) -->
     <header class="nav-wrapper">
         <nav class="pill-navbar" aria-label="Navigasi utama">
             <a href="#home" class="pill-logo" aria-label="KYO Studio - beranda">
@@ -27,19 +35,18 @@
                         <source src="images/logo-loop.mp4" type="video/mp4">
                     </video>
                 </span>
-                <span>QIZA PORTO</span>
+                <span>KYO STUDIO</span>
             </a>
 
             <div class="pill-nav-right">
                 <ul class="pill-links">
-                    <li><a href="#home" data-link>Beranda</a></li>
-                    <li><a href="#about" data-link>Tentang</a></li>
-                    <li><a href="#works" data-link>Karya</a></li>
-                    <li><a href="#skills" data-link>Keahlian</a></li>
-                    <li><a href="#contact" data-link>Kontak</a></li>
+                    <li><a href="#home" data-link>Home</a></li>
+                    <li><a href="#about" data-link>About</a></li>
+                    <li><a href="#portfolio" data-link>Portfolio</a></li>
+                    <li><a href="#contact" data-link>Contact</a></li>
                 </ul>
 
-                <a href="#contact" class="btn btn-light btn-sm">Contact</a>
+                <a href="#contact" class="btn btn-light btn-sm">Hire Me</a>
 
                 <button class="menu-toggle" id="menuToggle" aria-label="Buka menu" aria-expanded="false" aria-controls="dropdownMenu">
                     <span></span><span></span>
@@ -47,21 +54,20 @@
             </div>
 
             <div class="dropdown-menu" id="dropdownMenu">
-                <a href="#home">Beranda</a>
-                <a href="#about">Tentang</a>
-                <a href="#works">Karya</a>
-                <a href="#skills">Keahlian</a>
-                <a href="#contact">Kontak</a>
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#portfolio">Portfolio</a>
+                <a href="#contact">Contact</a>
             </div>
         </nav>
     </header>
 
     <main>
-        <!-- HERO -->
+        <!-- ================= HERO ================= -->
         <section class="hero" id="home">
             <div class="hero-stage">
                 <div class="hero-meta hero-meta-left reveal">
-                    <span class="mono-tag">Cinematographer &amp; Dev</span>
+                    <span class="mono-tag">Welcome to my portfolio</span>
                     <h2>Visual Storyteller &amp; Modern Web Creator</h2>
                 </div>
 
@@ -78,12 +84,24 @@
                 </div>
             </div>
 
-            <div class="hero-cta reveal">
-                <a href="#works" class="btn btn-primary">Lihat Karya</a>
-                <a href="#contact" class="btn btn-ghost">Mulai Proyek</a>
+            <div class="hero-intro reveal">
+                <p>Halo, saya <strong>Kyo</strong>. Saya mengubah ide, cahaya, dan kode menjadi cerita visual serta pengalaman web yang punya makna.</p>
+
+                <div class="hero-cta">
+                    <a href="#portfolio" class="btn btn-primary">Explore Portfolio</a>
+                    <a href="#contact" class="btn btn-ghost">Contact Me</a>
+                </div>
+
+                <div class="find-me">
+                    <span class="mono-tag find-label">Find me</span>
+                    <!-- Ganti link sosial di bawah dengan akun kamu -->
+                    <a class="social-pill" href="https://instagram.com/" target="_blank" rel="noopener">Instagram</a>
+                    <a class="social-pill" href="https://tiktok.com/" target="_blank" rel="noopener">TikTok</a>
+                    <a class="social-pill" href="https://wa.me/62xxxxxxxxxx" target="_blank" rel="noopener">WhatsApp</a>
+                </div>
             </div>
 
-            <!-- Marquee -->
+            <!-- MARQUEE -->
             <div class="marquee" aria-hidden="true">
                 <div class="marquee-track">
                     <div class="marquee-group">
@@ -106,10 +124,10 @@
             </div>
         </section>
 
-        <!-- ABOUT -->
+        <!-- ================= ABOUT ================= -->
         <section id="about" class="section">
             <div class="section-header reveal">
-                <h2 class="section-title">TENTANG <span>SAYA</span></h2>
+                <h2 class="section-title">ABOUT <span>ME</span></h2>
                 <p class="section-subtitle">Mengenal lebih dekat sosok di balik lensa dan kode.</p>
             </div>
 
@@ -118,13 +136,15 @@
                     <div class="about-photo-frame">
                         <img src="images/profile.jpg" alt="Foto Kyo" loading="lazy" width="480" height="600"
                              onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=700&q=70'">
+                    </div>
+                    <span class="about-tag mono-tag">📍 Jember, Indonesia</span>
                 </div>
 
                 <div class="about-text reveal" style="--i:1">
-                    <span class="mono-tag">Halo, saya Kyo</span>
+                    <span class="mono-tag">Hi, I'm Kyo</span>
                     <h3>Visual storyteller yang juga membangun web.</h3>
                     <p>Saya seorang cinematographer sekaligus frontend developer yang suka menggabungkan dua dunia: visual sinematik dan pengalaman web yang interaktif. Dari penataan lighting dan pengambilan gambar, sampai color grading dan membangun tampilan website, saya menangani prosesnya dengan detail.</p>
-                    <p>Beberapa proyek yang pernah saya kerjakan antara lain teaser event POSSMA, web ARTHEVALITY, dan toko digital Qiza Store. Saya selalu berusaha membuat hasil yang rapi, enak dilihat, dan nyaman dipakai di perangkat apa pun.</p>
+                    <p>Bagi saya, kreativitas adalah proses untuk terus bereksplorasi dan belajar. Saya selalu berusaha membuat hasil yang rapi, enak dilihat, dan nyaman dipakai di perangkat apa pun.</p>
 
                     <ul class="about-facts">
                         <li><strong>Fokus</strong><span>Video sinematik &amp; web interaktif</span></li>
@@ -133,24 +153,63 @@
                         <li><strong>Lokasi</strong><span>Jember, ID</span></li>
                     </ul>
 
-                    <div class="about-tools">
-                        <span class="chip-static">Cinematography</span>
-                        <span class="chip-static">Lighting</span>
-                        <span class="chip-static">Color Grading</span>
-                        <span class="chip-static">Video Editing</span>
-                        <span class="chip-static">Frontend Dev</span>
-                        <span class="chip-static">Tailwind CSS</span>
-                    </div>
-
-                    <a href="#contact" class="btn btn-primary">Ajak Kolaborasi</a>
+                    <a href="#portfolio" class="btn btn-primary">Lihat Projek →</a>
                 </div>
+            </div>
+
+            <!-- Core capabilities -->
+            <h3 class="sub-title reveal">CORE <span>CAPABILITIES</span></h3>
+            <div class="skills">
+                <article class="skill card-lite reveal" style="--i:0">
+                    <div class="skill-icon" aria-hidden="true">🎥</div>
+                    <h3>CINEMATOGRAPHY &amp; LIGHTING</h3>
+                    <p>Pengoperasian kamera Fujifilm X-T2, penataan lighting studio/lokasi, dan pengambilan gambar dengan komposisi sinematik.</p>
+                </article>
+                <article class="skill card-lite reveal" style="--i:1">
+                    <div class="skill-icon" aria-hidden="true">💻</div>
+                    <h3>FRONTEND DEVELOPMENT</h3>
+                    <p>Pengembangan website responsif dengan struktur HTML5 yang bersih, utilitas Tailwind CSS, dan scripting JavaScript interaktif.</p>
+                </article>
+                <article class="skill card-lite reveal" style="--i:2">
+                    <div class="skill-icon" aria-hidden="true">🎞️</div>
+                    <h3>POST-PRODUCTION EDITING</h3>
+                    <p>Video cutting yang berirama presisi, color grading moody/cinematic, dan retouching aset grafis untuk kebutuhan publikasi.</p>
+                </article>
+            </div>
+
+            <!-- Journey timeline -->
+            <h3 class="sub-title reveal">CREATIVE <span>JOURNEY</span></h3>
+            <ol class="timeline">
+                <li class="reveal" style="--i:0">
+                    <span class="tl-icon" aria-hidden="true">🎬</span>
+                    <div><h4>Teaser Commercial POSSMA Event</h4><p>Cinematography, lighting composition &amp; color grading</p></div>
+                </li>
+                <li class="reveal" style="--i:1">
+                    <span class="tl-icon" aria-hidden="true">💻</span>
+                    <div><h4>ARTHEVALITY Web Batch</h4><p>Frontend design dengan HTML &amp; Tailwind CSS</p></div>
+                </li>
+                <li class="reveal" style="--i:2">
+                    <span class="tl-icon" aria-hidden="true">📸</span>
+                    <div><h4>Mood Photography Session</h4><p>Pemotretan dengan setup Fujifilm X-T2</p></div>
+                </li>
+                <li class="reveal" style="--i:3">
+                    <span class="tl-icon" aria-hidden="true">🛍️</span>
+                    <div><h4>Qiza Store Digital Storefront</h4><p>Web responsif &amp; integrasi WhatsApp</p></div>
+                </li>
+            </ol>
+
+            <!-- Stats -->
+            <div class="stats">
+                <div class="stat reveal" style="--i:0"><strong data-count="4">0</strong><span>Projects</span><small>Karya yang dibuat</small></div>
+                <div class="stat reveal" style="--i:1"><strong data-count="3">0</strong><span>Categories</span><small>Video, Web &amp; Foto</small></div>
+                <div class="stat reveal" style="--i:2"><strong data-count="3">0</strong><span>Skills</span><small>Bidang keahlian inti</small></div>
             </div>
         </section>
 
-        <!-- WORKS -->
-        <section id="works" class="section">
+        <!-- ================= PORTFOLIO ================= -->
+        <section id="portfolio" class="section">
             <div class="section-header reveal">
-                <h2 class="section-title">SELECTED <span>WORKS</span></h2>
+                <h2 class="section-title">MY <span>PORTFOLIO</span></h2>
                 <p class="section-subtitle">Kumpulan portofolio sinematografi, liputan event, dan web development.</p>
             </div>
 
@@ -212,50 +271,79 @@
             </div>
         </section>
 
-        <!-- SKILLS -->
-        <section id="skills" class="section">
-            <div class="section-header reveal">
-                <h2 class="section-title">CORE <span>CAPABILITIES</span></h2>
-                <p class="section-subtitle">Kombinasi keahlian teknis visual dan pemrograman digital.</p>
-            </div>
-
-            <div class="skills">
-                <article class="skill card-lite reveal" style="--i:0">
-                    <div class="skill-icon" aria-hidden="true">🎥</div>
-                    <h3>CINEMATOGRAPHY &amp; LIGHTING</h3>
-                    <p>Pengoperasian kamera Fujifilm X-T2, penataan lighting studio/lokasi, dan pengambilan gambar dengan komposisi sinematik.</p>
-                </article>
-                <article class="skill card-lite reveal" style="--i:1">
-                    <div class="skill-icon" aria-hidden="true">💻</div>
-                    <h3>FRONTEND DEVELOPMENT</h3>
-                    <p>Pengembangan website responsif dengan struktur HTML5 yang bersih, utilitas Tailwind CSS, dan scripting JavaScript interaktif.</p>
-                </article>
-                <article class="skill card-lite reveal" style="--i:2">
-                    <div class="skill-icon" aria-hidden="true">🎞️</div>
-                    <h3>POST-PRODUCTION EDITING</h3>
-                    <p>Video cutting yang berirama presisi, color grading moody/cinematic, dan retouching aset grafis untuk kebutuhan publikasi.</p>
-                </article>
-            </div>
-        </section>
-
-        <!-- CONTACT -->
+        <!-- ================= CONTACT ================= -->
         <section id="contact" class="section">
-            <div class="contact-box reveal">
-                <h2>LET'S CREATE <span>SOMETHING GREAT</span></h2>
-                <p>Punya proyek video sinematik atau butuh pembuatan web interaktif? Mari berdiskusi.</p>
-                <!-- Ganti 62xxxxxxxxxx dengan nomor WhatsApp kamu (format internasional tanpa +) -->
-                <a href="https://wa.me/62xxxxxxxxxx?text=Halo%20KYO%2C%20saya%20tertarik%20dengan%20layanan%20kamu" target="_blank" rel="noopener" class="btn btn-primary btn-lg">
-                    HUBUNGI VIA WHATSAPP
-                </a>
+            <div class="section-header reveal">
+                <h2 class="section-title">HUBUNGI <span>SAYA</span></h2>
+                <p class="section-subtitle">Punya proyek video sinematik atau butuh pembuatan web interaktif? Mari berdiskusi.</p>
+            </div>
+
+            <div class="contact-grid">
+                <form class="panel reveal" id="contactForm" novalidate>
+                    <h3>Kirim Pesan</h3>
+                    <p class="panel-note">Ada yang ingin ditanyakan? Langsung kirim pesan ke WhatsApp saya.</p>
+
+                    <div class="field">
+                        <label for="cName">Nama</label>
+                        <input id="cName" name="name" type="text" autocomplete="name" placeholder="Nama kamu" required>
+                    </div>
+                    <div class="field">
+                        <label for="cEmail">Email</label>
+                        <input id="cEmail" name="email" type="email" autocomplete="email" placeholder="email@kamu.com">
+                    </div>
+                    <div class="field">
+                        <label for="cMsg">Pesan</label>
+                        <textarea id="cMsg" name="message" rows="4" placeholder="Ceritakan proyek kamu..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+                    <p class="form-hint" id="formHint">Pesan dibuka di WhatsApp dengan teks yang sudah terisi.</p>
+                </form>
+
+                <div class="panel reveal" style="--i:1">
+                    <h3>Find Me</h3>
+                    <p class="panel-note">Terhubung lewat platform favorit kamu.</p>
+                    <!-- Ganti link & username di bawah dengan akun kamu -->
+                    <div class="social-list">
+                        <a class="social-card" href="https://instagram.com/" target="_blank" rel="noopener"><span><strong>Instagram</strong><small>@username</small></span><i aria-hidden="true">↗</i></a>
+                        <a class="social-card" href="https://tiktok.com/" target="_blank" rel="noopener"><span><strong>TikTok</strong><small>@username</small></span><i aria-hidden="true">↗</i></a>
+                        <a class="social-card" href="https://wa.me/62xxxxxxxxxx" target="_blank" rel="noopener"><span><strong>WhatsApp</strong><small>+62 xxx-xxxx-xxxx</small></span><i aria-hidden="true">↗</i></a>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
 
+    <!-- ================= FOOTER ================= -->
     <footer class="footer">
-        <p>© 2026 KYO Studio. All rights reserved.</p>
-        <a href="#home" class="to-top" aria-label="Kembali ke atas">↑ Atas</a>
+        <div class="footer-grid">
+            <div>
+                <p class="footer-brand">KYO<span>.studio</span></p>
+                <p class="footer-text">Cinematographer &amp; Frontend Developer. Membuat cerita lewat visual dan kode.</p>
+            </div>
+            <div>
+                <h4>Navigasi</h4>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#portfolio">Portfolio</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Terhubung</h4>
+                <ul>
+                    <li><a href="https://instagram.com/" target="_blank" rel="noopener">Instagram</a></li>
+                    <li><a href="https://tiktok.com/" target="_blank" rel="noopener">TikTok</a></li>
+                    <li><a href="https://wa.me/62xxxxxxxxxx" target="_blank" rel="noopener">WhatsApp</a></li>
+                </ul>
+            </div>
+        </div>
+        <p class="footer-copy">© 2026 KYO Studio. All rights reserved.</p>
     </footer>
 
-    <script src="assets/script.js" defer></script>
+    <button class="to-top-btn" id="toTop" aria-label="Kembali ke atas">↑</button>
+
+    <script src="script.js" defer></script>
 </body>
 </html>
