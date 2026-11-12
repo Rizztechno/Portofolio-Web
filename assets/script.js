@@ -16,16 +16,18 @@
         toggle.setAttribute('aria-label', open ? 'Tutup menu' : 'Buka menu');
     };
 
-    toggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        setMenu(!menu.classList.contains('active'));
-    });
-    menu.addEventListener('click', (e) => { if (e.target.closest('a')) setMenu(false); });
-    document.addEventListener('click', (e) => { if (!menu.contains(e.target)) setMenu(false); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
-    matchMedia('(min-width: 861px)').addEventListener('change', () => setMenu(false));
+    if (toggle && menu) {
+        toggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            setMenu(!menu.classList.contains('active'));
+        });
+        menu.addEventListener('click', (e) => { if (e.target.closest('a')) setMenu(false); });
+        document.addEventListener('click', (e) => { if (!menu.contains(e.target)) setMenu(false); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+        matchMedia('(min-width: 861px)').addEventListener('change', () => setMenu(false));
+    }
 
-    /* ---------- Reveal saat scroll (satu observer, berhenti setelah tampil) ---------- */
+    /* ---------- Reveal saat scroll ---------- */
     const revealEls = $$('.reveal');
     if ('IntersectionObserver' in window && !reduceMotion) {
         const io = new IntersectionObserver((entries) => {
@@ -41,20 +43,24 @@
         revealEls.forEach((el) => el.classList.add('is-visible'));
     }
 
-    /* ---------- Scroll progress + link aktif (di-throttle dengan rAF) ---------- */
+    /* ---------- Scroll progress + link aktif ---------- */
     const bar = $('#scrollProgress');
     const links = $$('[data-link]');
     const sections = links.map((a) => $(a.getAttribute('href'))).filter(Boolean);
     let ticking = false;
 
     const onScroll = () => {
-        const max = document.documentElement.scrollHeight - innerHeight;
-        bar.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
+        if (bar) {
+            const max = document.documentElement.scrollHeight - innerHeight;
+            bar.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
+        }
 
         const pos = scrollY + innerHeight * 0.35;
         let current = sections[0];
-        sections.forEach((s) => { if (s.offsetTop <= pos) current = s; });
-        links.forEach((a) => a.classList.toggle('is-active', a.getAttribute('href') === '#' + current.id));
+        sections.forEach((s) => { if (s && s.offsetTop <= pos) current = s; });
+        if (current) {
+            links.forEach((a) => a.classList.toggle('is-active', a.getAttribute('href') === '#' + current.id));
+        }
         ticking = false;
     };
     addEventListener('scroll', () => {
@@ -62,37 +68,70 @@
     }, { passive: true });
     onScroll();
 
-    /* ---------- Filter karya ---------- */
-    const chips = $$('.chip');
+    /* ---------- FOLDER INTERAKTIF LOGIC ---------- */
+    const folderGridView = $('#folderGridView');
+    const categoryDetailView = $('#categoryDetailView');
+    const backFolderBtn = $('#backFolderBtn');
+    const currentFolderTitle = $('#currentFolderTitle');
+    const folderCards = $$('.folder-card');
     const cards = $$('.card[data-cat]');
 
-    chips.forEach((chip) => chip.addEventListener('click', () => {
-        const f = chip.dataset.filter;
-        chips.forEach((c) => {
-            const on = c === chip;
-            c.classList.toggle('is-active', on);
-            c.setAttribute('aria-selected', String(on));
-        });
+    const categoryTitles = {
+        'video': 'Cinematography & Video',
+        'web': 'Web Development',
+        'photo': 'Photography Session'
+    };
+
+    const openFolder = (cat) => {
+        if (!folderGridView || !categoryDetailView) return;
+
+        if (currentFolderTitle) {
+            currentFolderTitle.textContent = categoryTitles[cat] || 'Karya Terpilih';
+        }
+
+        folderGridView.style.display = 'none';
+        categoryDetailView.classList.add('active');
 
         cards.forEach((card) => {
-            const show = f === 'all' || card.dataset.cat === f;
-            card.classList.add('is-visible'); // pastikan tidak tersangkut state reveal
+            const show = card.dataset.cat === cat;
             if (show) {
-                if (card.classList.contains('is-hidden')) {
-                    card.classList.remove('is-hidden');
-                    card.classList.add('is-fading');
-                    requestAnimationFrame(() => requestAnimationFrame(() => card.classList.remove('is-fading')));
-                }
+                card.classList.remove('is-hidden', 'is-fading');
+                card.classList.add('is-visible');
             } else {
-                card.classList.add('is-fading');
-                setTimeout(() => card.classList.add('is-hidden'), reduceMotion ? 0 : 250);
+                card.classList.add('is-hidden');
             }
         });
-    }));
 
-    /* ---------- Spotlight kartu (hanya perangkat mouse) ---------- */
+        $('#works').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+    };
+
+    const closeFolder = () => {
+        if (!folderGridView || !categoryDetailView) return;
+
+        categoryDetailView.classList.remove('active');
+        folderGridView.style.display = 'grid';
+
+        $('#works').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+    };
+
+    folderCards.forEach((folder) => {
+        const cat = folder.dataset.category;
+        folder.addEventListener('click', () => openFolder(cat));
+        folder.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openFolder(cat);
+            }
+        });
+    });
+
+    if (backFolderBtn) {
+        backFolderBtn.addEventListener('click', closeFolder);
+    }
+
+    /* ---------- Spotlight kartu (perangkat mouse) ---------- */
     if (canHover && !reduceMotion) {
-        $$('.card, .card-lite').forEach((card) => {
+        $$('.card, .card-lite, .folder-card').forEach((card) => {
             let raf = 0;
             card.addEventListener('pointermove', (e) => {
                 if (raf) return;
@@ -106,7 +145,7 @@
         });
     }
 
-    /* ---------- Hemat baterai: pause video logo saat tab tidak aktif ---------- */
+    /* ---------- Hemat baterai video logo ---------- */
     const logoVideo = $('.logo-frame video');
     if (logoVideo) {
         document.addEventListener('visibilitychange', () => {
