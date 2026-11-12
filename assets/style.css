@@ -278,11 +278,6 @@ button { font: inherit; cursor: pointer; }
     content: ''; position: absolute; inset: 14px -14px -14px 14px; z-index: -1;
     border-radius: 20px; border: 1.5px solid var(--magenta); opacity: .5;
 }
-.about-tag {
-    position: absolute; left: 1rem; bottom: 1rem; z-index: 2; margin: 0;
-    padding: .3rem .8rem; border-radius: 999px;
-    background: rgba(13, 13, 18, .8); border: 1px solid rgba(255, 255, 255, .15);
-}
 .about-text h3 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 600; line-height: 1.2; margin: .3rem 0 1rem; }
 .about-text p { color: var(--muted); margin-bottom: .9rem; }
 .about-facts {
