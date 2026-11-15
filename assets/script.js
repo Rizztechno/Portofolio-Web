@@ -1,7 +1,7 @@
 (() => {
     'use strict';
 
-    /* Ganti dengan nomor WhatsApp kamu (format internasional tanpa +), contoh: 6281234567890 */
+    /* Nomor WhatsApp (format internasional tanpa +) */
     const WA_NUMBER = '6282233129573';
 
     const $ = (s, c = document) => c.querySelector(s);
@@ -40,34 +40,17 @@
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
     matchMedia('(min-width: 861px)').addEventListener('change', () => setMenu(false));
 
-    /* ---------- Count-up statistik ---------- */
-    const countUp = (el) => {
-        const end = parseInt(el.dataset.count, 10) || 0;
-        if (reduceMotion) { el.textContent = end; return; }
-        const dur = 1200, t0 = performance.now();
-        const step = (t) => {
-            const p = Math.min((t - t0) / dur, 1);
-            el.textContent = Math.round(end * (1 - Math.pow(1 - p, 3)));
-            if (p < 1) requestAnimationFrame(step);
-        };
-        requestAnimationFrame(step);
-    };
-
     /* ---------- Reveal saat scroll ---------- */
     const revealEls = $$('.reveal');
-    const reveal = (el) => {
-        el.classList.add('is-visible');
-        $$('[data-count]', el).forEach(countUp);
-    };
     if ('IntersectionObserver' in window && !reduceMotion) {
         const io = new IntersectionObserver((entries) => {
             entries.forEach((en) => {
-                if (en.isIntersecting) { reveal(en.target); io.unobserve(en.target); }
+                if (en.isIntersecting) { en.target.classList.add('is-visible'); io.unobserve(en.target); }
             });
         }, { threshold: 0.12, rootMargin: '0px 0px -5% 0px' });
         revealEls.forEach((el) => io.observe(el));
     } else {
-        revealEls.forEach(reveal);
+        revealEls.forEach((el) => el.classList.add('is-visible'));
     }
 
     /* ---------- Scroll progress + link aktif + tombol ke atas ---------- */
@@ -95,67 +78,45 @@
 
     toTop.addEventListener('click', () => scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' }));
 
-    /* ---------- Filter karya ---------- */
-    const chips = $$('.chip');
-    const cards = $$('.card[data-cat]');
-
-    chips.forEach((chip) => chip.addEventListener('click', () => {
-        const f = chip.dataset.filter;
-        chips.forEach((c) => {
-            const on = c === chip;
-            c.classList.toggle('is-active', on);
-            c.setAttribute('aria-selected', String(on));
-        });
-
-        cards.forEach((card) => {
-            const show = f === 'all' || card.dataset.cat === f;
-            card.classList.add('is-visible');
-            if (show) {
-                if (card.classList.contains('is-hidden')) {
-                    card.classList.remove('is-hidden');
-                    card.classList.add('is-fading');
-                    requestAnimationFrame(() => requestAnimationFrame(() => card.classList.remove('is-fading')));
-                }
-            } else {
-                card.classList.add('is-fading');
-                setTimeout(() => card.classList.add('is-hidden'), reduceMotion ? 0 : 250);
-            }
-        });
-    }));
-
-    /* ---------- Instagram posts in portfolio ---------- */
-    const instagramPosts = [
-        { url: 'https://www.instagram.com/reel/DYNVq0JyE6p/', title: 'Instagram Reel 1' },
-        { url: 'https://www.instagram.com/reel/DJdauS3SOdN/', title: 'Instagram Reel 2' },
-        { url: 'https://www.instagram.com/p/DfdsmgMvKd9/', title: 'Instagram Post 3' }
-    ];
-    const portfolioGrid = $('#bento');
-    const portfolioFilters = $('.filters');
-
-    if (portfolioGrid) {
-        if (portfolioFilters) portfolioFilters.hidden = true;
-        portfolioGrid.replaceChildren();
-        portfolioGrid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(min(100%, 326px), 1fr))';
-        portfolioGrid.style.alignItems = 'start';
-
-        instagramPosts.forEach(({ url, title }) => {
-            const card = document.createElement('article');
-            card.className = 'card instagram-post';
-            card.style.cssText = 'min-width:0; padding:12px; display:flex; justify-content:center;';
-            card.innerHTML = `<blockquote class="instagram-media" data-instgrm-permalink="${url}" data-instgrm-version="14" style="background:#fff; border:0; border-radius:4px; box-shadow:0 0 1px rgba(0,0,0,.5),0 1px 10px rgba(0,0,0,.15); margin:0; max-width:540px; min-width:0; padding:0; width:100%;"><a href="${url}" target="_blank" rel="noopener noreferrer" aria-label="Lihat ${title} di Instagram">Lihat ${title} di Instagram</a></blockquote>`;
-            portfolioGrid.append(card);
-        });
-
-        const embedScript = document.createElement('script');
-        embedScript.src = 'https://www.instagram.com/embed.js';
-        embedScript.async = true;
-        embedScript.onload = () => window.instgrm?.Embeds?.process();
-        document.body.append(embedScript);
+    /* ---------- Efek mengetik di hero ---------- */
+    const typedEl = $('#typed');
+    if (typedEl && !reduceMotion) {
+        const words = ['CineMedia', 'Web Developer', 'App Premium Store'];
+        let wi = 0, ci = 0, deleting = false;
+        const tick = () => {
+            const word = words[wi];
+            ci += deleting ? -1 : 1;
+            typedEl.textContent = word.slice(0, ci);
+            let wait = deleting ? 45 : 95;
+            if (!deleting && ci === word.length) { deleting = true; wait = 1600; }
+            else if (deleting && ci === 0) { deleting = false; wi = (wi + 1) % words.length; wait = 350; }
+            setTimeout(tick, wait);
+        };
+        typedEl.textContent = '';
+        setTimeout(tick, 900);
     }
 
-    /* ---------- Spotlight kartu (hanya perangkat mouse) ---------- */
+    /* ---------- Parallax teks raksasa di hero (hanya perangkat mouse) ---------- */
+    const stage = $('#heroStage');
+    const giant = $('#giantText');
+    if (stage && giant && canHover && !reduceMotion) {
+        let raf = 0;
+        stage.addEventListener('pointermove', (e) => {
+            if (raf) return;
+            raf = requestAnimationFrame(() => {
+                const r = stage.getBoundingClientRect();
+                const x = (e.clientX - r.left) / r.width - 0.5;
+                const y = (e.clientY - r.top) / r.height - 0.5;
+                giant.style.transform = `translate3d(${x * -26}px, ${y * -14}px, 0)`;
+                raf = 0;
+            });
+        }, { passive: true });
+        stage.addEventListener('pointerleave', () => { giant.style.transform = ''; });
+    }
+
+    /* ---------- Spotlight kartu layanan (hanya perangkat mouse) ---------- */
     if (canHover && !reduceMotion) {
-        $$('.card, .card-lite').forEach((card) => {
+        $$('.card-lite').forEach((card) => {
             let raf = 0;
             card.addEventListener('pointermove', (e) => {
                 if (raf) return;
@@ -169,27 +130,83 @@
         });
     }
 
-    /* ---------- Form kontak -> WhatsApp ---------- */
+    /* ---------- Pilih layanan -> isi form kontak ---------- */
     const form = $('#contactForm');
+    const nameInput = $('#cName');
+    const emailInput = $('#cEmail');
+    const serviceSelect = $('#cService');
+    const msgInput = $('#cMsg');
     const hint = $('#formHint');
+    const defaultHint = hint.textContent;
+
+    $$('.service-btn').forEach((btn) => btn.addEventListener('click', () => {
+        serviceSelect.value = btn.dataset.service;
+        setTimeout(() => (nameInput.value ? msgInput : nameInput).focus({ preventScroll: true }), reduceMotion ? 0 : 650);
+    }));
+
+    /* ---------- Form kontak -> WhatsApp ---------- */
+    const setHint = (text, isError) => {
+        hint.textContent = text;
+        hint.classList.toggle('is-error', !!isError);
+    };
+
     form.addEventListener('submit', (e) => {
         e.preventDefault();
-        const name = form.name.value.trim();
-        const email = form.email.value.trim();
-        const msg = form.message.value.trim();
+        const name = nameInput.value.trim();
+        const email = emailInput.value.trim();
+        const service = serviceSelect.value;
+        const msg = msgInput.value.trim();
 
-        [form.name, form.message].forEach((el) => el.parentElement.classList.toggle('is-error', !el.value.trim()));
+        nameInput.parentElement.classList.toggle('is-error', !name);
+        msgInput.parentElement.classList.toggle('is-error', !msg);
         if (!name || !msg) {
-            hint.textContent = 'Nama dan pesan wajib diisi.';
+            setHint('Nama dan pesan wajib diisi.', true);
             return;
         }
 
-        const text = `Halo KYO, saya ${name}${email ? ` (${email})` : ''}.\n\n${msg}`;
+        const text = `Halo Itzy, saya ${name}${email ? ` (${email})` : ''}.\nLayanan: ${service}\n\n${msg}`;
         window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
-        hint.textContent = 'Pesan dibuka di WhatsApp dengan teks yang sudah terisi.';
+        setHint(defaultHint, false);
         form.reset();
     });
-    $$('input, textarea', form).forEach((el) => el.addEventListener('input', () => el.parentElement.classList.remove('is-error')));
+    [nameInput, msgInput].forEach((el) => el.addEventListener('input', () => {
+        el.parentElement.classList.remove('is-error');
+        if (hint.classList.contains('is-error')) setHint(defaultHint, false);
+    }));
+
+    /* ---------- Embed Instagram (dimuat hanya saat section mendekati layar) ---------- */
+    const igPosts = $$('.instagram-post');
+    const portfolio = $('#portfolio');
+    let igStarted = false;
+
+    const markFallback = () => {
+        igPosts.forEach((post) => {
+            if (!post.querySelector('iframe')) post.classList.add('embed-fallback');
+        });
+    };
+
+    const loadInstagram = () => {
+        if (igStarted) return;
+        igStarted = true;
+        const s = document.createElement('script');
+        s.src = 'https://www.instagram.com/embed.js';
+        s.async = true;
+        s.onload = () => window.instgrm?.Embeds?.process();
+        s.onerror = markFallback;
+        document.body.append(s);
+        setTimeout(markFallback, 9000); // kalau embed tidak muncul (diblokir/offline), tampilkan tombol cadangan
+    };
+
+    if (portfolio && igPosts.length) {
+        if ('IntersectionObserver' in window) {
+            const igObserver = new IntersectionObserver((entries) => {
+                if (entries.some((en) => en.isIntersecting)) { loadInstagram(); igObserver.disconnect(); }
+            }, { rootMargin: '600px 0px' });
+            igObserver.observe(portfolio);
+        } else {
+            loadInstagram();
+        }
+    }
 
     /* ---------- Hemat baterai: pause video logo saat tab tidak aktif ---------- */
     const logoVideo = $('.logo-frame video');
