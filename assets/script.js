@@ -123,6 +123,36 @@
         });
     }));
 
+    /* ---------- Instagram posts in portfolio ---------- */
+    const instagramPosts = [
+        { url: 'https://www.instagram.com/reel/DYNVq0JyE6p/', title: 'Instagram Reel 1' },
+        { url: 'https://www.instagram.com/reel/DJdauS3SOdN/', title: 'Instagram Reel 2' },
+        { url: 'https://www.instagram.com/p/DfdsmgMvKd9/', title: 'Instagram Post 3' }
+    ];
+    const portfolioGrid = $('#bento');
+    const portfolioFilters = $('.filters');
+
+    if (portfolioGrid) {
+        if (portfolioFilters) portfolioFilters.hidden = true;
+        portfolioGrid.replaceChildren();
+        portfolioGrid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(min(100%, 326px), 1fr))';
+        portfolioGrid.style.alignItems = 'start';
+
+        instagramPosts.forEach(({ url, title }) => {
+            const card = document.createElement('article');
+            card.className = 'card instagram-post';
+            card.style.cssText = 'min-width:0; padding:12px; display:flex; justify-content:center;';
+            card.innerHTML = `<blockquote class="instagram-media" data-instgrm-permalink="${url}" data-instgrm-version="14" style="background:#fff; border:0; border-radius:4px; box-shadow:0 0 1px rgba(0,0,0,.5),0 1px 10px rgba(0,0,0,.15); margin:0; max-width:540px; min-width:0; padding:0; width:100%;"><a href="${url}" target="_blank" rel="noopener noreferrer" aria-label="Lihat ${title} di Instagram">Lihat ${title} di Instagram</a></blockquote>`;
+            portfolioGrid.append(card);
+        });
+
+        const embedScript = document.createElement('script');
+        embedScript.src = 'https://www.instagram.com/embed.js';
+        embedScript.async = true;
+        embedScript.onload = () => window.instgrm?.Embeds?.process();
+        document.body.append(embedScript);
+    }
+
     /* ---------- Spotlight kartu (hanya perangkat mouse) ---------- */
     if (canHover && !reduceMotion) {
         $$('.card, .card-lite').forEach((card) => {
