@@ -287,39 +287,131 @@ button { cursor: pointer; }
 }
 .service-btn:hover { border-color: var(--cyan); }
 
-/* ============ PORTFOLIO (INSTAGRAM) ============ */
-.ig-grid {
+/* ============ PORTFOLIO (FOLDER + GALERI) ============ */
+.folder-grid {
     max-width: var(--container); margin: 0 auto;
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 1.5rem;
-    align-items: start;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 2rem 1.5rem;
 }
-.instagram-post {
-    position: relative; min-width: 0; min-height: 440px; padding: 8px; overflow: hidden;
-    background: linear-gradient(145deg, rgba(124, 58, 237, .18), rgba(255, 45, 106, .12));
-    border: 1px solid var(--card-border); border-radius: 18px;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, .28);
-    transition: transform .3s var(--ease), border-color .3s, box-shadow .3s;
+.folder {
+    position: relative; display: block; width: 100%; padding: 74px 0 0; text-align: left;
+    background: none; border: 0; color: inherit; -webkit-tap-highlight-color: transparent;
 }
-.instagram-post .instagram-media,
-.instagram-post iframe {
-    display: block; width: 100% !important; max-width: 100% !important; min-width: 0 !important;
-    margin: 0 auto !important; border-radius: 12px !important;
+.folder-photos { position: absolute; left: 10%; right: 10%; top: 0; height: 130px; z-index: 1; pointer-events: none; }
+.folder-photos img {
+    position: absolute; left: 0; bottom: 0; width: 100%; height: 104px; object-fit: cover;
+    border-radius: 10px; border: 3px solid #f4f4f8; background: #1a1a28;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, .45);
+    transition: transform .45s var(--ease);
 }
-.instagram-media { background: #fff; border: 0; padding: 0; }
-.instagram-media > a {
-    display: grid; place-items: center; min-height: 420px; padding: 1rem;
-    color: #3b3b4a; font-size: .9rem; text-decoration: none; text-align: center;
+.folder-photos img:nth-child(1) { transform: rotate(-7deg) translateY(4px); }
+.folder-photos img:nth-child(2) { transform: rotate(5deg) translateY(2px); }
+.folder-photos img:nth-child(3) { transform: rotate(-1deg); }
+.folder-photos img:only-child { transform: rotate(-2deg); }
+
+.folder-front {
+    position: relative; z-index: 2; display: flex; flex-direction: column; gap: .15rem;
+    min-height: 150px; padding: 1.4rem 1.3rem 1.2rem; border-radius: 4px 20px 20px 20px;
+    background: linear-gradient(150deg, rgba(124, 58, 237, .55), rgba(255, 45, 106, .38)), #14141f;
+    border: 1px solid rgba(255, 255, 255, .16);
+    box-shadow: 0 16px 34px rgba(0, 0, 0, .35);
+    transition: transform .35s var(--ease), box-shadow .35s, border-color .35s;
 }
-.ig-fallback {
-    display: none; margin: 4rem auto 0; width: fit-content;
-    padding: .8rem 1.5rem; border-radius: 999px; text-decoration: none; font-weight: 600;
-    background: linear-gradient(90deg, var(--purple), var(--magenta)); color: #fff;
+.folder-front::before {
+    content: ''; position: absolute; left: -1px; top: -16px; width: 42%; height: 17px;
+    border-radius: 12px 12px 0 0; border: 1px solid rgba(255, 255, 255, .16); border-bottom: 0;
+    background: linear-gradient(90deg, rgba(124, 58, 237, .75), rgba(124, 58, 237, .55)), #14141f;
 }
-.instagram-post.embed-fallback { min-height: 220px; }
-.instagram-post.embed-fallback .instagram-media { display: none; }
-.instagram-post.embed-fallback .ig-fallback { display: block; margin-top: 2.2rem; margin-bottom: 2.2rem; }
-.instagram-post:focus-within { border-color: var(--cyan); box-shadow: 0 0 0 2px rgba(0, 240, 255, .18), 0 16px 36px rgba(0, 0, 0, .3); }
-.ig-more { text-align: center; margin-top: 2.5rem; }
+.folder-front strong { font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 1.7rem; letter-spacing: 1px; line-height: 1.1; }
+.folder-front small { color: rgba(255, 255, 255, .72); font-size: .88rem; }
+.folder-front em {
+    margin-top: auto; padding-top: .8rem; font-style: normal; font-family: 'Space Mono', monospace;
+    font-size: .76rem; text-transform: uppercase; color: var(--cyan);
+}
+.folder-front em::after { content: ' →'; }
+.folder:focus-visible { outline-offset: 6px; }
+.folder:active .folder-front { transform: scale(.98); }
+
+.portfolio-more { text-align: center; margin-top: 3rem; color: var(--muted); }
+
+/* Popup galeri */
+.no-scroll { overflow: hidden; }
+.gallery-modal {
+    position: fixed; inset: 0; z-index: 1500; display: grid; place-items: center; padding: 1.2rem;
+    background: rgba(5, 5, 16, .82); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    opacity: 0; visibility: hidden; transition: opacity .3s, visibility .3s;
+}
+.gallery-modal.is-open { opacity: 1; visibility: visible; }
+.gm-panel {
+    width: 100%; max-width: 980px; max-height: min(90vh, 900px); display: flex; flex-direction: column;
+    border-radius: 22px; overflow: hidden; border: 1px solid rgba(255, 255, 255, .14);
+    background: radial-gradient(circle at 50% 0%, rgba(124, 58, 237, .22), transparent 65%), #0e0e1a;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, .65);
+    transform: translateY(18px) scale(.97); transition: transform .4s var(--ease);
+}
+.gallery-modal.is-open .gm-panel { transform: none; }
+.gm-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.2rem 1.4rem; border-bottom: 1px solid var(--card-border); }
+.gm-head h3 { font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 2rem; letter-spacing: 1.5px; line-height: 1; }
+.gm-head .mono-tag { margin: .25rem 0 0; }
+.gm-close, .lb-close {
+    flex-shrink: 0; width: 42px; height: 42px; border-radius: 50%; font-size: 1rem; color: #fff;
+    background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .2);
+    transition: background .25s, transform .25s var(--ease);
+}
+.gm-close:hover, .lb-close:hover { background: var(--magenta); transform: rotate(90deg); }
+.gm-grid {
+    padding: 1.1rem; overflow-y: auto; overscroll-behavior: contain;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: .8rem;
+}
+.gm-item {
+    position: relative; display: block; aspect-ratio: 1; padding: 0; overflow: hidden;
+    border-radius: 12px; border: 1px solid var(--card-border); background: #1a1a28;
+}
+.gm-item img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s var(--ease); }
+.gm-item::after {
+    content: '⤢'; position: absolute; right: 8px; bottom: 8px; width: 28px; height: 28px; display: grid; place-items: center;
+    border-radius: 50%; background: rgba(5, 5, 16, .7); font-size: .9rem; opacity: 0; transition: opacity .25s;
+}
+.gm-item:focus-visible::after { opacity: 1; }
+
+/* Pratinjau foto besar */
+.lightbox {
+    position: fixed; inset: 0; z-index: 1600; display: grid; place-items: center; padding: 3.5rem 4rem;
+    background: rgba(2, 2, 10, .94); opacity: 0; visibility: hidden; transition: opacity .25s, visibility .25s;
+}
+.lightbox.is-open { opacity: 1; visibility: visible; }
+.lb-figure { display: flex; flex-direction: column; align-items: center; gap: .8rem; max-width: 100%; }
+.lb-figure img { max-width: 100%; max-height: 78vh; border-radius: 12px; object-fit: contain; box-shadow: 0 20px 60px rgba(0, 0, 0, .6); }
+.lb-figure figcaption { font-family: 'Space Mono', monospace; font-size: .8rem; color: var(--muted); }
+.lb-close { position: absolute; top: 1rem; right: 1rem; }
+.lb-nav {
+    position: absolute; top: 50%; width: 48px; height: 48px; margin-top: -24px; border-radius: 50%;
+    font-size: 1.9rem; line-height: 1; color: #fff; padding-bottom: 4px;
+    background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .2);
+    transition: background .25s;
+}
+.lb-nav:hover { background: var(--purple); }
+.lb-prev { left: 1rem; }
+.lb-next { right: 1rem; }
+
+@media (hover: hover) and (pointer: fine) {
+    .folder:hover .folder-front { transform: translateY(-4px); border-color: var(--cyan); box-shadow: 0 22px 44px rgba(0, 0, 0, .45), 0 0 24px rgba(0, 240, 255, .12); }
+    .folder:hover .folder-photos img:nth-child(1) { transform: rotate(-12deg) translate(-14px, -22px); }
+    .folder:hover .folder-photos img:nth-child(2) { transform: rotate(10deg) translate(14px, -18px); }
+    .folder:hover .folder-photos img:nth-child(3) { transform: rotate(-1deg) translateY(-30px); }
+    .folder:hover .folder-photos img:only-child { transform: translateY(-26px); }
+    .gm-item:hover img { transform: scale(1.08); }
+    .gm-item:hover::after { opacity: 1; }
+}
+
+@media (max-width: 600px) {
+    .gallery-modal { padding: 0; align-items: end; }
+    .gm-panel { max-height: 92vh; border-radius: 22px 22px 0 0; }
+    .gm-grid { grid-template-columns: repeat(2, 1fr); gap: .6rem; padding: .9rem; }
+    .lightbox { padding: 3.5rem .5rem; }
+    .lb-nav { top: auto; bottom: 1rem; margin: 0; }
+    .lb-prev { left: calc(50% - 64px); }
+    .lb-next { right: calc(50% - 64px); }
+}
 
 /* ============ CONTACT ============ */
 .contact-grid { max-width: var(--container); margin: 0 auto; display: grid; grid-template-columns: 1.15fr .85fr; gap: 1.5rem; align-items: start; }
@@ -393,10 +485,6 @@ button { cursor: pointer; }
     .card-lite:hover::before { opacity: 1; }
     .service:hover .service-icon { transform: rotate(-8deg) scale(1.1); }
     .service-btn:hover { letter-spacing: .4px; }
-    .instagram-post:hover {
-        transform: translateY(-6px); border-color: var(--magenta);
-        box-shadow: 0 18px 40px rgba(255, 45, 106, .22), 0 0 22px rgba(124, 58, 237, .18);
-    }
     .reveal.is-visible { transition-delay: 0ms; }
 }
 
