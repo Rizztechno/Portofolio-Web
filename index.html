@@ -195,33 +195,14 @@
         <section id="portfolio" class="section">
             <div class="section-header reveal">
                 <h2 class="section-title">MY <span>PORTFOLIO</span></h2>
-                <p class="section-subtitle">Kumpulan karya sinematografi dan konten, langsung dari Instagram.</p>
+                <p class="section-subtitle">Pilih folder untuk melihat kumpulan fotonya.</p>
             </div>
 
-            <div class="ig-grid" id="igGrid">
-                <article class="instagram-post reveal" style="--i:0">
-                    <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DYNVq0JyE6p/" data-instgrm-version="14">
-                        <a href="https://www.instagram.com/reel/DYNVq0JyE6p/" target="_blank" rel="noopener noreferrer">Lihat Reel di Instagram</a>
-                    </blockquote>
-                    <a class="ig-fallback" href="https://www.instagram.com/reel/DYNVq0JyE6p/" target="_blank" rel="noopener noreferrer">Buka Reel di Instagram ↗</a>
-                </article>
+            <!-- Kartu folder dibuat otomatis dari daftar PORTFOLIO di assets/script.js -->
+            <div class="folder-grid" id="folderGrid"></div>
+            <noscript><p class="portfolio-more">Aktifkan JavaScript untuk melihat galeri foto.</p></noscript>
 
-                <article class="instagram-post reveal" style="--i:1">
-                    <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DJdauS3SOdN/" data-instgrm-version="14">
-                        <a href="https://www.instagram.com/reel/DJdauS3SOdN/" target="_blank" rel="noopener noreferrer">Lihat Reel di Instagram</a>
-                    </blockquote>
-                    <a class="ig-fallback" href="https://www.instagram.com/reel/DJdauS3SOdN/" target="_blank" rel="noopener noreferrer">Buka Reel di Instagram ↗</a>
-                </article>
-
-                <article class="instagram-post reveal" style="--i:2">
-                    <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DfdsmgMvKd9/" data-instgrm-version="14">
-                        <a href="https://www.instagram.com/p/DfdsmgMvKd9/" target="_blank" rel="noopener noreferrer">Lihat postingan di Instagram</a>
-                    </blockquote>
-                    <a class="ig-fallback" href="https://www.instagram.com/p/DfdsmgMvKd9/" target="_blank" rel="noopener noreferrer">Buka postingan di Instagram ↗</a>
-                </article>
-            </div>
-
-            <p class="ig-more reveal">
+            <p class="portfolio-more reveal">
                 <a class="btn btn-ghost" href="https://instagram.com/rizbcdx_" target="_blank" rel="noopener">Lihat lebih banyak di @rizbcdx_ ↗</a>
             </p>
         </section>
@@ -305,6 +286,31 @@
         </div>
         <p class="footer-copy">© 2026 Itzy Production. All rights reserved.</p>
     </footer>
+
+    <!-- GALERI POPUP -->
+    <div class="gallery-modal" id="galleryModal" role="dialog" aria-modal="true" aria-labelledby="gmTitle" aria-hidden="true">
+        <div class="gm-panel">
+            <header class="gm-head">
+                <div>
+                    <h3 id="gmTitle"></h3>
+                    <span class="mono-tag" id="gmCount"></span>
+                </div>
+                <button type="button" class="gm-close" id="gmClose" aria-label="Tutup galeri">✕</button>
+            </header>
+            <div class="gm-grid" id="gmGrid"></div>
+        </div>
+    </div>
+
+    <!-- PRATINJAU FOTO -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Pratinjau foto" aria-hidden="true">
+        <button type="button" class="lb-close" id="lbClose" aria-label="Tutup pratinjau">✕</button>
+        <button type="button" class="lb-nav lb-prev" id="lbPrev" aria-label="Foto sebelumnya">‹</button>
+        <figure class="lb-figure">
+            <img id="lbImg" alt="">
+            <figcaption id="lbCap"></figcaption>
+        </figure>
+        <button type="button" class="lb-nav lb-next" id="lbNext" aria-label="Foto berikutnya">›</button>
+    </div>
 
     <button class="to-top-btn" id="toTop" aria-label="Kembali ke atas">↑</button>
 
