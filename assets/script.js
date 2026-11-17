@@ -40,6 +40,161 @@
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
     matchMedia('(min-width: 861px)').addEventListener('change', () => setMenu(false));
 
+    /* ---------- Portfolio: folder -> popup galeri ----------
+       EDIT DI SINI: tambah/ubah folder dan nama file foto.
+       Letakkan foto di folder `dir` (mis. images/portfolio/cinemedia/01.jpg).
+       Foto pertama dipakai sebagai cover. Kalau file belum ada, tampil placeholder. */
+    const PORTFOLIO = [
+        {
+            title: 'CineMedia', desc: 'Foto & video sinematik', hue: [275, 330],
+            dir: 'images/portfolio/cinemedia/',
+            photos: ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg', '06.jpg']
+        },
+        {
+            title: 'Portrait', desc: 'Sesi foto personal & profil', hue: [200, 260],
+            dir: 'images/portfolio/portrait/',
+            photos: ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg', '06.jpg']
+        },
+        {
+            title: 'Event', desc: 'Dokumentasi acara & momen', hue: [330, 20],
+            dir: 'images/portfolio/event/',
+            photos: ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg']
+        },
+        {
+            title: 'Web Design', desc: 'Tampilan website & landing page', hue: [175, 230],
+            dir: 'images/portfolio/web/',
+            photos: ['01.jpg', '02.jpg', '03.jpg', '04.jpg']
+        }
+    ];
+
+    const placeholder = (label, hue) => 'data:image/svg+xml;utf8,' + encodeURIComponent(
+        `<svg xmlns='http://www.w3.org/2000/svg' width='800' height='800'>` +
+        `<defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>` +
+        `<stop offset='0' stop-color='hsl(${hue[0]},65%,38%)'/><stop offset='1' stop-color='hsl(${hue[1]},65%,18%)'/></linearGradient></defs>` +
+        `<rect width='800' height='800' fill='url(#g)'/>` +
+        `<text x='50%' y='50%' fill='rgba(255,255,255,.75)' font-family='sans-serif' font-size='46' text-anchor='middle' dominant-baseline='middle'>${label}</text></svg>`
+    );
+
+    const setPhoto = (img, folder, i) => {
+        img.onerror = () => { img.onerror = null; img.src = placeholder(`${folder.title} ${String(i + 1).padStart(2, '0')}`, folder.hue); };
+        img.src = folder.dir + folder.photos[i];
+    };
+    const makeImg = (folder, i, alt) => {
+        const img = new Image();
+        img.alt = alt;
+        img.decoding = 'async';
+        img.loading = 'lazy';
+        setPhoto(img, folder, i);
+        return img;
+    };
+
+    const folderGrid = $('#folderGrid');
+    const gm = $('#galleryModal');
+    const gmGrid = $('#gmGrid');
+    const gmClose = $('#gmClose');
+    const lb = $('#lightbox');
+    const lbImg = $('#lbImg');
+    const lbCap = $('#lbCap');
+    let current = null, lbIndex = 0, lastFocus = null;
+
+    const lockScroll = (on) => document.documentElement.classList.toggle('no-scroll', on);
+    const isOpen = (el) => el.classList.contains('is-open');
+
+    const openGallery = (folder, trigger) => {
+        current = folder;
+        lastFocus = trigger;
+        $('#gmTitle').textContent = folder.title;
+        $('#gmCount').textContent = `${folder.photos.length} foto`;
+        gmGrid.replaceChildren();
+        folder.photos.forEach((_, i) => {
+            const b = document.createElement('button');
+            b.type = 'button';
+            b.className = 'gm-item';
+            b.setAttribute('aria-label', `Buka foto ${i + 1} dari ${folder.photos.length}`);
+            b.append(makeImg(folder, i, `${folder.title} - foto ${i + 1}`));
+            b.addEventListener('click', () => openLightbox(i));
+            gmGrid.append(b);
+        });
+        gmGrid.scrollTop = 0;
+        gm.classList.add('is-open');
+        gm.setAttribute('aria-hidden', 'false');
+        lockScroll(true);
+        gmClose.focus({ preventScroll: true });
+    };
+
+    const closeGallery = () => {
+        gm.classList.remove('is-open');
+        gm.setAttribute('aria-hidden', 'true');
+        lockScroll(false);
+        lastFocus?.focus({ preventScroll: true });
+    };
+
+    const showPhoto = (i) => {
+        const n = current.photos.length;
+        lbIndex = (i + n) % n;
+        lbImg.alt = `${current.title} - foto ${lbIndex + 1}`;
+        setPhoto(lbImg, current, lbIndex);
+        lbCap.textContent = `${current.title} · ${lbIndex + 1} / ${n}`;
+    };
+    const openLightbox = (i) => {
+        showPhoto(i);
+        lb.classList.add('is-open');
+        lb.setAttribute('aria-hidden', 'false');
+        $('#lbClose').focus({ preventScroll: true });
+    };
+    const closeLightbox = () => {
+        lb.classList.remove('is-open');
+        lb.setAttribute('aria-hidden', 'true');
+        const thumb = gmGrid.children[lbIndex];
+        (thumb || gmClose).focus({ preventScroll: true });
+    };
+
+    PORTFOLIO.forEach((folder, i) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'folder reveal';
+        btn.style.setProperty('--i', i);
+        btn.setAttribute('aria-haspopup', 'dialog');
+        btn.setAttribute('aria-label', `Buka folder ${folder.title}, ${folder.photos.length} foto`);
+        btn.innerHTML =
+            '<span class="folder-photos" aria-hidden="true"></span>' +
+            `<span class="folder-front"><strong>${folder.title}</strong><small>${folder.desc}</small><em>${folder.photos.length} foto</em></span>`;
+        const stack = btn.firstElementChild;
+        folder.photos.slice(0, 3).forEach((_, k) => stack.append(makeImg(folder, k, '')));
+        btn.addEventListener('click', () => openGallery(folder, btn));
+        folderGrid.append(btn);
+    });
+
+    gmClose.addEventListener('click', closeGallery);
+    gm.addEventListener('click', (e) => { if (e.target === gm) closeGallery(); });
+    $('#lbClose').addEventListener('click', closeLightbox);
+    lb.addEventListener('click', (e) => { if (e.target === lb) closeLightbox(); });
+    $('#lbPrev').addEventListener('click', () => showPhoto(lbIndex - 1));
+    $('#lbNext').addEventListener('click', () => showPhoto(lbIndex + 1));
+
+    let touchX = null;
+    lb.addEventListener('touchstart', (e) => { touchX = e.touches[0].clientX; }, { passive: true });
+    lb.addEventListener('touchend', (e) => {
+        if (touchX === null) return;
+        const dx = e.changedTouches[0].clientX - touchX;
+        touchX = null;
+        if (Math.abs(dx) > 50) showPhoto(lbIndex + (dx < 0 ? 1 : -1));
+    }, { passive: true });
+
+    document.addEventListener('keydown', (e) => {
+        const layer = isOpen(lb) ? lb : isOpen(gm) ? gm : null;
+        if (!layer) return;
+        if (e.key === 'Escape') { layer === lb ? closeLightbox() : closeGallery(); return; }
+        if (layer === lb && e.key === 'ArrowLeft') showPhoto(lbIndex - 1);
+        if (layer === lb && e.key === 'ArrowRight') showPhoto(lbIndex + 1);
+        if (e.key === 'Tab') { // fokus tetap di dalam popup
+            const items = $$('button', layer);
+            const first = items[0], last = items[items.length - 1];
+            if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+            else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
+    });
+
     /* ---------- Reveal saat scroll ---------- */
     const revealEls = $$('.reveal');
     if ('IntersectionObserver' in window && !reduceMotion) {
@@ -173,40 +328,6 @@
         el.parentElement.classList.remove('is-error');
         if (hint.classList.contains('is-error')) setHint(defaultHint, false);
     }));
-
-    /* ---------- Embed Instagram (dimuat hanya saat section mendekati layar) ---------- */
-    const igPosts = $$('.instagram-post');
-    const portfolio = $('#portfolio');
-    let igStarted = false;
-
-    const markFallback = () => {
-        igPosts.forEach((post) => {
-            if (!post.querySelector('iframe')) post.classList.add('embed-fallback');
-        });
-    };
-
-    const loadInstagram = () => {
-        if (igStarted) return;
-        igStarted = true;
-        const s = document.createElement('script');
-        s.src = 'https://www.instagram.com/embed.js';
-        s.async = true;
-        s.onload = () => window.instgrm?.Embeds?.process();
-        s.onerror = markFallback;
-        document.body.append(s);
-        setTimeout(markFallback, 9000); // kalau embed tidak muncul (diblokir/offline), tampilkan tombol cadangan
-    };
-
-    if (portfolio && igPosts.length) {
-        if ('IntersectionObserver' in window) {
-            const igObserver = new IntersectionObserver((entries) => {
-                if (entries.some((en) => en.isIntersecting)) { loadInstagram(); igObserver.disconnect(); }
-            }, { rootMargin: '600px 0px' });
-            igObserver.observe(portfolio);
-        } else {
-            loadInstagram();
-        }
-    }
 
     /* ---------- Hemat baterai: pause video logo saat tab tidak aktif ---------- */
     const logoVideo = $('.logo-frame video');
